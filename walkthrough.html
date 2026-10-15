@@ -16,109 +16,107 @@
   <link rel="stylesheet" href="https://psychedelicsinrecovery.github.io/arrival/org.css" />
   <link rel="stylesheet" href="https://psychedelicsinrecovery.github.io/alex-desk-public/assets/alex.css" />
   <style>
+    /* Site-prefixed tokens on purpose: the kit owns --ink, --muted and friends. */
     :root {
-      --g-ink: var(--ink, #f3eee4);
-      --g-muted: var(--muted, rgba(243,238,228,.62));
-      --g-gold: var(--gold, #e8b45a);
-      --g-violet: var(--violet, #a78bfa);
-      --g-panel: var(--panel, rgba(255,255,255,.045));
-      --g-line: var(--line, rgba(255,255,255,.11));
-      --g-serif: "Fraunces", Georgia, serif;
-      --g-sans: "Manrope", system-ui, sans-serif;
+      --gal-ink: #f3eee4;
+      --gal-muted: rgba(243, 238, 228, 0.66);
+      --gal-gold: #e8b45a;
+      --gal-violet: #a78bfa;
+      --gal-panel: rgba(255, 255, 255, 0.05);
+      --gal-line: rgba(255, 255, 255, 0.12);
+      --gal-serif: "Fraunces", Georgia, serif;
+      --gal-sans: "Manrope", system-ui, sans-serif;
     }
     * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; color: var(--g-ink); background: #06050e; font-family: var(--g-sans); -webkit-font-smoothing: antialiased; }
+    body { margin: 0; min-height: 100vh; color: var(--gal-ink); background: #06050e; font-family: var(--gal-sans); -webkit-font-smoothing: antialiased; }
     #starfield-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-    .wrap { max-width: 900px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); position: relative; z-index: 5; }
-    header.top { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(12px); background: rgba(6,5,14,.55); border-bottom: 1px solid var(--g-line); }
-    header.top .wrap { display: flex; align-items: center; gap: 1rem; min-height: 64px; }
-    .brand { display: inline-flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--g-ink); font-family: var(--g-serif); font-weight: 700; font-size: 1.1rem; }
-    .brand img { border-radius: 9px; }
-    .brand small { font-family: var(--g-sans); font-weight: 600; font-size: .72rem; color: var(--g-gold); letter-spacing: .08em; }
-    .top-links { margin-left: auto; display: flex; gap: .3rem; flex-wrap: wrap; }
-    .top-links a { display: inline-flex; align-items: center; gap: .45rem; color: var(--g-muted); text-decoration: none; font-size: .88rem; font-weight: 600; padding: .45rem .8rem; border-radius: 999px; }
-    .top-links a:hover { color: var(--g-ink); background: var(--g-panel); }
-    .hero { padding: clamp(2.4rem, 6vw, 4rem) 0 1.2rem; }
-    .kicker { display: inline-flex; align-items: center; gap: .5rem; font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--g-gold); border: 1px solid rgba(232,180,90,.35); border-radius: 999px; padding: .35rem .9rem; background: rgba(232,180,90,.08); }
-    h1 { font-family: var(--g-serif); font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.08; letter-spacing: -.02em; margin: 1rem 0 .7rem; }
-    .lede { font-size: clamp(1rem, 1.5vw, 1.14rem); color: var(--g-muted); max-width: 62ch; line-height: 1.6; }
-    h2 { font-family: var(--g-serif); font-size: 1.5rem; margin: 2.4rem 0 .8rem; }
-    a.inline { color: var(--g-gold); text-decoration: none; }
+    .gal-wrap { max-width: 900px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); position: relative; z-index: 5; }
+    header.top { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(12px); background: rgba(6, 5, 14, 0.55); border-bottom: 1px solid var(--gal-line); }
+    header.top .gal-wrap { display: flex; align-items: center; gap: 1rem; min-height: 64px; }
+    .gal-brand { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--gal-ink); font-family: var(--gal-serif); font-weight: 700; font-size: 1.1rem; }
+    .gal-brand img { border-radius: 9px; }
+    .gal-brand small { font-family: var(--gal-sans); font-weight: 600; font-size: 0.72rem; color: var(--gal-gold); letter-spacing: 0.08em; }
+    main { position: relative; z-index: 10; }
+    .gal-hero { padding: clamp(2.4rem, 6vw, 4rem) 0 1.2rem; }
+    .gal-kicker { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gal-gold); border: 1px solid rgba(232, 180, 90, 0.35); border-radius: 999px; padding: 0.35rem 0.9rem; background: rgba(232, 180, 90, 0.08); }
+    h1 { font-family: var(--gal-serif); font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.08; letter-spacing: -0.02em; margin: 1rem 0 0.7rem; color: var(--gal-ink); }
+    .gal-lede { font-size: clamp(1rem, 1.5vw, 1.14rem); color: var(--gal-muted); max-width: 62ch; line-height: 1.6; }
+    h2 { font-family: var(--gal-serif); font-size: 1.5rem; margin: 2.4rem 0 0.8rem; color: var(--gal-ink); }
+    a.inline { color: var(--gal-gold); text-decoration: none; }
     a.inline:hover { text-decoration: underline; }
 
-    .paths { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 1rem; margin: 1.4rem 0; }
-    .path { border: 1px solid var(--g-line); border-radius: 18px; background: var(--g-panel); padding: 1.3rem; }
-    .path i { font-size: 1.5rem; color: var(--g-gold); }
-    .path h3 { font-family: var(--g-serif); font-size: 1.1rem; margin: .6rem 0 .4rem; }
-    .path p { margin: 0 0 .8rem; font-size: .89rem; color: var(--g-muted); line-height: 1.55; }
-    .btn { display: inline-flex; align-items: center; gap: .55rem; font-weight: 700; font-size: .92rem; padding: .65rem 1.25rem; border-radius: 999px; text-decoration: none; border: 1px solid var(--g-line); color: var(--g-ink); background: var(--g-panel); transition: transform .15s, border-color .15s; }
-    .btn:hover { transform: translateY(-2px); border-color: rgba(232,180,90,.55); }
-    .btn.primary { background: linear-gradient(120deg, var(--g-violet), var(--g-gold)); color: #17120a; border-color: transparent; }
+    .gal-paths { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 1rem; margin: 1.4rem 0; }
+    .gal-path { border: 1px solid var(--gal-line); border-radius: 18px; background: var(--gal-panel); padding: 1.3rem; }
+    .gal-path i { font-size: 1.5rem; color: var(--gal-gold); }
+    .gal-path h3 { font-family: var(--gal-serif); font-size: 1.1rem; margin: 0.6rem 0 0.4rem; color: var(--gal-ink); }
+    .gal-path p { margin: 0 0 0.8rem; font-size: 0.89rem; color: var(--gal-muted); line-height: 1.55; }
+    .gal-btn { display: inline-flex; align-items: center; gap: 0.55rem; font-weight: 700; font-size: 0.92rem; padding: 0.65rem 1.25rem; border-radius: 999px; text-decoration: none; border: 1px solid var(--gal-line); color: var(--gal-ink); background: var(--gal-panel); transition: transform 0.15s, border-color 0.15s; }
+    .gal-btn:hover { transform: translateY(-2px); border-color: rgba(232, 180, 90, 0.55); }
+    .gal-btn.primary { background: linear-gradient(120deg, var(--gal-violet), var(--gal-gold)); color: #17120a; border-color: transparent; }
 
-    ol.steps { list-style: none; counter-reset: st; padding: 0; margin: 1.2rem 0; display: flex; flex-direction: column; gap: .9rem; }
-    ol.steps li { counter-increment: st; display: grid; grid-template-columns: 2.6rem 1fr; gap: .9rem; border: 1px solid var(--g-line); border-radius: 18px; background: var(--g-panel); padding: 1.1rem 1.2rem; }
-    ol.steps li::before { content: counter(st); font-family: var(--g-serif); font-size: 1.5rem; font-weight: 700; color: var(--g-gold); line-height: 1; }
-    ol.steps h3 { font-family: var(--g-serif); font-size: 1.06rem; margin: .15rem 0 .35rem; }
-    ol.steps p { margin: 0; font-size: .9rem; color: var(--g-muted); line-height: 1.6; }
-    ol.steps code { font-family: "JetBrains Mono", monospace; font-size: .84em; background: rgba(255,255,255,.07); border: 1px solid var(--g-line); border-radius: 6px; padding: .08em .4em; }
-    pre { font-family: "JetBrains Mono", monospace; font-size: .85rem; background: rgba(255,255,255,.05); border: 1px solid var(--g-line); border-radius: 12px; padding: 1rem 1.2rem; overflow-x: auto; line-height: 1.6; color: var(--g-ink); }
+    ol.gal-steps { list-style: none; counter-reset: st; padding: 0; margin: 1.2rem 0; display: flex; flex-direction: column; gap: 0.9rem; }
+    ol.gal-steps li { counter-increment: st; display: grid; grid-template-columns: 2.6rem 1fr; gap: 0.9rem; border: 1px solid var(--gal-line); border-radius: 18px; background: var(--gal-panel); padding: 1.1rem 1.2rem; }
+    ol.gal-steps li::before { content: counter(st); font-family: var(--gal-serif); font-size: 1.5rem; font-weight: 700; color: var(--gal-gold); line-height: 1; }
+    ol.gal-steps h3 { font-family: var(--gal-serif); font-size: 1.06rem; margin: 0.15rem 0 0.35rem; color: var(--gal-ink); }
+    ol.gal-steps p { margin: 0; font-size: 0.9rem; color: var(--gal-muted); line-height: 1.6; }
+    ol.gal-steps code { font-family: "JetBrains Mono", monospace; font-size: 0.84em; background: rgba(255, 255, 255, 0.07); border: 1px solid var(--gal-line); border-radius: 6px; padding: 0.08em 0.4em; color: var(--gal-ink); }
+    pre { font-family: "JetBrains Mono", monospace; font-size: 0.85rem; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--gal-line); border-radius: 12px; padding: 1rem 1.2rem; overflow-x: auto; line-height: 1.6; color: var(--gal-ink); }
 
-    .notes { border: 1px solid var(--g-line); border-radius: 18px; background: var(--g-panel); padding: 1.3rem 1.4rem; margin: 1.4rem 0; }
-    .notes ul { margin: .4rem 0 0; padding-left: 1.2rem; color: var(--g-muted); font-size: .9rem; line-height: 1.7; }
-    .notes b { color: var(--g-ink); }
-    .consent { font-size: .82rem; color: var(--g-muted); border-left: 2px solid var(--g-gold); padding-left: .8rem; line-height: 1.6; margin: 1.6rem 0; }
-    footer { position: relative; z-index: 5; border-top: 1px solid var(--g-line); margin-top: 3rem; padding: 2.2rem 0 2.6rem; color: var(--g-muted); font-size: .84rem; line-height: 1.7; }
-    footer a { color: var(--g-gold); text-decoration: none; }
+    .gal-notes { border: 1px solid var(--gal-line); border-radius: 18px; background: var(--gal-panel); padding: 1.3rem 1.4rem; margin: 1.4rem 0; }
+    .gal-notes ul { margin: 0.4rem 0 0; padding-left: 1.2rem; color: var(--gal-muted); font-size: 0.9rem; line-height: 1.7; }
+    .gal-notes b { color: var(--gal-ink); }
+    .gal-consent { font-size: 0.82rem; color: var(--gal-muted); border-left: 2px solid var(--gal-gold); padding-left: 0.8rem; line-height: 1.6; margin: 1.6rem 0; }
+    footer { position: relative; z-index: 10; border-top: 1px solid var(--gal-line); margin-top: 3rem; padding: 2.2rem 0 2.6rem; color: var(--gal-muted); font-size: 0.84rem; line-height: 1.7; }
+    footer a { color: var(--gal-gold); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
   </style>
 </head>
 <body>
   <canvas id="starfield-canvas" aria-hidden="true"></canvas>
   <header class="top">
-    <div class="wrap">
-      <a class="brand" href="index.html">
+    <div class="gal-wrap">
+      <a class="gal-brand" href="index.html">
         <img src="favicon.svg" alt="" width="34" height="34" />
         <span>Gallery <small>PIR®</small></span>
       </a>
-      <nav class="top-links" aria-label="Walkthrough navigation">
-        <a href="index.html"><i class="ph-fill ph-images"></i> Back to the albums</a>
-        <a href="https://drive.google.com/drive/folders/1zUL1fHkDlWJLKrtHzfToceFoFl-PiTu?usp=sharing" target="_blank" rel="noopener"><i class="ph-fill ph-upload-simple"></i> Drive folder</a>
-      </nav>
+      <arrival-nav></arrival-nav>
+      <arrival-controls></arrival-controls>
     </div>
   </header>
 
   <main>
-    <div class="wrap">
-      <section class="hero">
-        <span class="kicker"><i class="ph-fill ph-map-trifold"></i> The whole process, end to end</span>
+    <div class="gal-wrap">
+      <section class="gal-hero">
+        <span class="gal-kicker"><i class="ph-fill ph-map-trifold"></i> The whole process, end to end</span>
         <h1>Add your photos to the PIR® Gallery</h1>
-        <p class="lede">
+        <p class="gal-lede">
           Thank you for sharing what you captured — photos are how the fellowship remembers its
-          gatherings. There are two paths: the <strong style="color:var(--g-ink)">send-it-in path</strong> (two minutes, no
-          tools) and the <strong style="color:var(--g-ink)">do-it-with-us path</strong> (you touch the repository yourself and
+          gatherings. There are two paths: the <strong style="color: var(--gal-ink)">send-it-in path</strong> (two minutes, no
+          tools) and the <strong style="color: var(--gal-ink)">do-it-with-us path</strong> (you touch the repository yourself and
           see your photos live in about a minute). Both end in the same place: your photos in the
           fellowship's own gallery, kept on its own ground.
         </p>
       </section>
 
       <h2>Choose your path</h2>
-      <div class="paths">
-        <div class="path">
+      <div class="gal-paths">
+        <div class="gal-path">
           <i class="ph-fill ph-paper-plane-tilt"></i>
           <h3>The send-it-in path</h3>
           <p>Upload your photos to the shared Drive folder. A trusted servant will name them, caption them, and place them in the right album with care.</p>
-          <a class="btn primary" href="https://drive.google.com/drive/folders/1zUL1fHkDlWJLKrtHzfToceFoFl-PiTu?usp=sharing" target="_blank" rel="noopener"><i class="ph-fill ph-upload-simple"></i> Open the Drive folder</a>
+          <a class="gal-btn primary" href="https://drive.google.com/drive/folders/1zUL1fHkDlWJLKrtHzfToceFoFl-PiTu?usp=sharing" target="_blank" rel="noopener"><i class="ph-fill ph-upload-simple"></i> Open the Drive folder</a>
         </div>
-        <div class="path">
+        <div class="gal-path">
           <i class="ph-fill ph-git-branch"></i>
           <h3>The do-it-with-us path</h3>
           <p>For members comfortable with folders and a terminal — the full walkthrough is below. Captions, credits and ordering are all in your hands.</p>
-          <a class="btn" href="#steps"><i class="ph-fill ph-arrow-down"></i> Walk the full process</a>
+          <a class="gal-btn" href="#steps"><i class="ph-fill ph-arrow-down"></i> Walk the full process</a>
         </div>
       </div>
 
       <h2 id="steps">The full walkthrough</h2>
-      <ol class="steps">
+      <ol class="gal-steps">
         <li>
           <div>
             <h3>Gather your photos</h3>
@@ -164,41 +162,49 @@ git push</pre>
         <li>
           <div>
             <h3>Watch it go live</h3>
-            <p>GitHub Actions publishes the gallery in about a minute. Open <a class="inline" href="index.html">the gallery</a> and your photos are there — browsable, captioned, and downloadable by the fellowship.</p>
+            <p>GitHub publishes the gallery in about a minute. Open <a class="inline" href="index.html">the gallery</a> and your photos are there — browsable, captioned, and downloadable by the fellowship.</p>
           </div>
         </li>
       </ol>
 
-      <div class="notes">
-        <h3 style="font-family:var(--g-serif);margin:.2rem 0 .5rem">Good to know</h3>
+      <div class="gal-notes">
+        <h3 style="font-family: var(--gal-serif); margin: 0.2rem 0 0.5rem">Good to know</h3>
         <ul>
           <li><b>Anonymity first.</b> Credits use first name + last initial ("Maria R."). If a photo identifies someone who'd rather not appear, it comes down.</li>
           <li><b>Consent is the tradition.</b> Every photo is shared with the fellowship's consent. To object to any photo, contact the gallery's trusted servants — removal is immediate and without question.</li>
           <li><b>Order matters.</b> The number prefix (<code>01-</code>, <code>02-</code>…) sets the order photos appear in.</li>
           <li><b>No tools?</b> The send-it-in path exists exactly for this. Upload to the Drive folder and a trusted servant handles the rest.</li>
-          <li><b>Big files are fine</b> — GitHub Pages serves them quickly worldwide. Very large sets may be resized by the trusted servants to keep the gallery quick.</li>
+          <li><b>Big files are fine</b> — Pages serves them quickly worldwide. Very large sets may be resized by the trusted servants to keep the gallery quick.</li>
         </ul>
       </div>
 
-      <p class="consent">
+      <p class="gal-consent">
         Photos are shared with the fellowship's consent. If you object to a photo being published,
         contact the gallery's trusted servants and it will be removed immediately. Photographs belong
         to the members who made them.
       </p>
 
-      <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin:1.6rem 0 2rem">
-        <a class="btn primary" href="index.html"><i class="ph-fill ph-images"></i> See the albums</a>
-        <a class="btn" href="https://github.com/psychedelicsinrecovery/gallery" target="_blank" rel="noopener"><i class="ph-fill ph-github-logo"></i> The repository</a>
+      <div style="display: flex; gap: 0.8rem; flex-wrap: wrap; margin: 1.6rem 0 2rem">
+        <a class="gal-btn primary" href="index.html"><i class="ph-fill ph-images"></i> See the albums</a>
+        <a class="gal-btn" href="https://github.com/psychedelicsinrecovery/gallery" target="_blank" rel="noopener"><i class="ph-fill ph-github-logo"></i> The repository</a>
       </div>
     </div>
   </main>
 
   <footer>
-    <div class="wrap">
+    <div class="gal-wrap" style="display:grid;gap:.4rem">
       <div>The PIR® Gallery · a keep-sake of <a href="https://psychedelicsinrecovery.github.io/">the fellowship's GitHub home</a>.</div>
       <div>Psychedelics In Recovery™ – PIR® · <a href="https://www.psychedelicsinrecovery.org/">psychedelicsinrecovery.org</a></div>
     </div>
   </footer>
+
+  <!-- The kit override: this site's name and welcome, read by the kit before it runs. -->
+  <script is-inline="">
+    window.ARRIVAL_SITE = {
+      name: "the PIR® Gallery",
+      what: "This is the walkthrough for adding your photos to the fellowship's gallery. Two paths: send them in through the Drive folder, or follow the steps and see them live in about a minute.",
+    };
+  </script>
   <script src="https://psychedelicsinrecovery.github.io/starfield.js" defer></script>
 </body>
 </html>
