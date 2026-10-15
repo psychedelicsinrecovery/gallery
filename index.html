@@ -142,16 +142,56 @@
     .gal-lb .lb-cap b { color: var(--gal-ink); }
     @media (max-width: 640px) { .gal-lb .stage { padding: 0 0.5rem; } .gal-lb .arrow { width: 2.4rem; height: 2.4rem; } .gal-lb .arrow.prev { left: 0.4rem; } .gal-lb .arrow.next { right: 0.4rem; } }
     @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+  
+    /* Image-tile marquee (replaces the text marquee) + centered hero + hub-chrome fallbacks */
+    .gal-tile {
+      position: relative;
+      flex: 0 0 auto;
+      width: 212px;
+      aspect-ratio: 1 / 1;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--gal-line, rgba(255, 255, 255, 0.12));
+      background: var(--gal-panel, #141126);
+    }
+    .gal-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .gal-tile figcaption {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: 0.55rem 0.7rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #f3eee4;
+      background: linear-gradient(transparent, rgba(6, 5, 14, 0.92));
+      opacity: 0;
+      transition: opacity 0.18s ease;
+    }
+    .gal-tile:hover figcaption { opacity: 1; }
+    .gal-marquee-note { margin: 0.2rem 0 0.5rem; font-size: 0.82rem; font-style: italic; color: rgba(243, 238, 228, 0.55); }
+    .gal-hero { text-align: center; }
+    .gal-hero .gal-kicker { margin-inline: auto; }
+    .gal-hero .gal-lede { margin-inline: auto; }
+    .gal-hero .gal-cta { justify-content: center; }
+    /* fallback chrome (hub parity) if the kit hasn't styled these classes */
+    .top .wrap { max-width: 1180px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); display: flex; align-items: center; gap: 1rem; min-height: 64px; }
+    .brand { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; color: #f3eee4; font-family: "Fraunces", Georgia, serif; font-weight: 700; font-size: 1.12rem; }
+    .brand img { border-radius: 9px; }
+    .brand small { font-family: "Manrope", system-ui, sans-serif; font-weight: 600; font-size: 0.72rem; color: #e8b45a; letter-spacing: 0.08em; margin-left: 0.4rem; }
+    .pir-foot { display: grid; grid-template-columns: 1.2fr 2fr; gap: 2rem; align-items: start; max-width: 1180px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); font-family: "Manrope", system-ui, sans-serif; }
+    .tended { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.8rem; color: rgba(243, 238, 228, 0.66); text-decoration: none; font-size: 0.8rem; }
+    .tended b { color: #e8b45a; font-family: "Fraunces", Georgia, serif; }
+    .cat-mark { width: 0.85rem; height: 0.85rem; border-radius: 50%; background: conic-gradient(from 180deg, #e8b45a, #a78bfa, #e8b45a); }
+    @media (max-width: 860px) { .pir-foot { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
   <canvas id="starfield-canvas" aria-hidden="true"></canvas>
 
   <header class="top">
-    <div class="gal-wrap">
-      <a class="gal-brand" href="https://psychedelicsinrecovery.github.io/">
+    <div class="wrap">
+      <a class="brand" href="https://psychedelicsinrecovery.github.io/">
         <img src="favicon.svg" alt="" width="34" height="34" />
-        <span>Gallery <small>PIR®</small></span>
+        <span class="arr-brand-text">Gallery <small>PIR®</small></span>
       </a>
       <arrival-nav></arrival-nav>
       <arrival-controls></arrival-controls>
@@ -181,32 +221,7 @@
          photos land — swap the list as real albums fill in. Decorative; pauses on hover. -->
     <div class="gal-marquee" role="img" aria-label="A scrolling preview of the moments the albums will hold">
       <div class="gal-marquee-label">In the albums, moments like these</div>
-      <div class="gal-track" aria-hidden="true">
-        <span><i class="ph-fill ph-confetti"></i> Opening ceremony</span>
-        <span><i class="ph-fill ph-microphone"></i> Panels &amp; speakers</span>
-        <span><i class="ph-fill ph-users-three"></i> The first hug in person</span>
-        <span><i class="ph-fill ph-campfire"></i> Candlelight meetings</span>
-        <span><i class="ph-fill ph-paint-brush"></i> Art &amp; creativity</span>
-        <span><i class="ph-fill ph-person-simple-walk"></i> Movement &amp; zen</span>
-        <span><i class="ph-fill ph-fork-knife"></i> Fellowship dinners</span>
-        <span><i class="ph-fill ph-music-notes"></i> Music night</span>
-        <span><i class="ph-fill ph-book-open-text"></i> <em>Living Psychedelic Sober</em> launch</span>
-        <span><i class="ph-fill ph-spiral"></i> Meow Wolf night out</span>
-        <span><i class="ph-fill ph-hands-clapping"></i> Service &amp; gratitude</span>
-        <span><i class="ph-fill ph-heart"></i> Recovery, together</span>
-        <span><i class="ph-fill ph-confetti"></i> Opening ceremony</span>
-        <span><i class="ph-fill ph-microphone"></i> Panels &amp; speakers</span>
-        <span><i class="ph-fill ph-users-three"></i> The first hug in person</span>
-        <span><i class="ph-fill ph-campfire"></i> Candlelight meetings</span>
-        <span><i class="ph-fill ph-paint-brush"></i> Art &amp; creativity</span>
-        <span><i class="ph-fill ph-person-simple-walk"></i> Movement &amp; zen</span>
-        <span><i class="ph-fill ph-fork-knife"></i> Fellowship dinners</span>
-        <span><i class="ph-fill ph-music-notes"></i> Music night</span>
-        <span><i class="ph-fill ph-book-open-text"></i> <em>Living Psychedelic Sober</em> launch</span>
-        <span><i class="ph-fill ph-spiral"></i> Meow Wolf night out</span>
-        <span><i class="ph-fill ph-hands-clapping"></i> Service &amp; gratitude</span>
-        <span><i class="ph-fill ph-heart"></i> Recovery, together</span>
-      </div>
+      <p class="gal-marquee-note">Illustrated previews — as albums come in, real photos take their places here.</p><div class="gal-track" id="galTrack"><figure class="gal-tile"><img src="assets/placeholders/tile-1.svg" alt="" loading="lazy" /><figcaption>The opening ceremony</figcaption></figure><figure class="gal-tile"><img src="assets/placeholders/tile-2.svg" alt="" loading="lazy" /><figcaption>Panels & speakers</figcaption></figure><figure class="gal-tile"><img src="assets/placeholders/tile-3.svg" alt="" loading="lazy" /><figcaption>The first hug in person</figcaption></figure><figure class="gal-tile"><img src="assets/placeholders/tile-4.svg" alt="" loading="lazy" /><figcaption>Candlelight meetings</figcaption></figure><figure class="gal-tile"><img src="assets/placeholders/tile-5.svg" alt="" loading="lazy" /><figcaption>Art & creativity</figcaption></figure><figure class="gal-tile"><img src="assets/placeholders/tile-6.svg" alt="" loading="lazy" /><figcaption>Fellowship dinners</figcaption></figure><figure class="gal-tile"><img src="assets/placeholders/tile-1.svg" alt="" loading="lazy" /><figcaption>The opening ceremony</figcaption></figure><figure class="gal-tile"><img src="assets/placeholders/tile-2.svg" alt="" loading="lazy" /><figcaption>Panels & speakers</figcaption></figure><figure class="gal-tile"><img src="assets/placeholders/tile-3.svg" alt="" loading="lazy" /><figcaption>The first hug in person</figcaption></figure><figure class="gal-tile"><img src="assets/placeholders/tile-4.svg" alt="" loading="lazy" /><figcaption>Candlelight meetings</figcaption></figure><figure class="gal-tile"><img src="assets/placeholders/tile-5.svg" alt="" loading="lazy" /><figcaption>Art & creativity</figcaption></figure><figure class="gal-tile"><img src="assets/placeholders/tile-6.svg" alt="" loading="lazy" /><figcaption>Fellowship dinners</figcaption></figure></div>
     </div>
 
     <div class="gal-wrap">
@@ -217,12 +232,11 @@
           <em>gallery.psychedelicsinrecovery.org</em> for the Inaugural Convention photos. One WhatsApp thread later, the
           fellowship had a shared Google Drive gathering everyone's photos from Denver — and a
           decision: the photos of our recovery deserve a home we own. So the fellowship built this
-          gallery on GitHub: no platform, no expiry, no cost — the Pixieset album and Drive folder
-          that sparked it are woven right in below.
+          gallery on GitHub: no platform, no expiry, no cost — the Pixieset album that sparked it is woven
+          right in below.
         </p>
         <div class="row">
           <a class="gal-btn" href="https://pir68.pixieset.com/psychedelicsinrecoverytminauguralconventiondenver2026/" target="_blank" rel="noopener"><i class="ph-fill ph-image"></i> The Pixieset album that started it</a>
-          <a class="gal-btn" href="https://drive.google.com/drive/folders/1zUL1fHkDlWJLKrtHzfToceFoFl-PiTu?usp=sharing" target="_blank" rel="noopener"><i class="ph-fill ph-upload-simple"></i> The Drive folder gathering photos</a>
           <a class="gal-btn" href="https://psychedelicsinrecovery.github.io/convention-astro/"><i class="ph-fill ph-confetti"></i> The Convention it honors</a>
         </div>
       </section>
@@ -237,16 +251,16 @@
       <section class="gal-add">
         <h2><i class="ph-fill ph-hand-heart"></i> Add your photos</h2>
         <p>
-          Were you there? Three paths, all easy: upload straight to the shared Drive folder, use
-          GitHub's own web interface from your browser (no terminal needed), or walk the full
-          process yourself — naming, captions, credits and all — in the walkthrough. If you would
-          rather not appear in a photo, tell a trusted servant and it comes down immediately: the
-          fellowship's consent comes first.
+          Were you there? Three paths, all easy: send your photos to a trusted servant and they
+          will place them with care, use GitHub's own web interface from your browser (no terminal
+          needed), or walk the full process yourself — naming, captions, credits and all — in the
+          walkthrough. If you would rather not appear in a photo, tell a trusted servant and it
+          comes down immediately: the fellowship's consent comes first.
         </p>
         <div class="row">
           <a class="gal-btn primary" href="walkthrough.html"><i class="ph-fill ph-map-trifold"></i> Walk through the process</a>
           <a class="gal-btn" href="walkthrough.html#web"><i class="ph-fill ph-browser"></i> The browser-only path</a>
-          <a class="gal-btn" href="https://drive.google.com/drive/folders/1zUL1fHkDlWJLKrtHzfToceFoFl-PiTu?usp=sharing" target="_blank" rel="noopener"><i class="ph-fill ph-upload-simple"></i> Upload to the Drive folder</a>
+          <a class="gal-btn" href="https://www.psychedelicsinrecovery.org/contact/" target="_blank" rel="noopener"><i class="ph-fill ph-hand-heart"></i> Send them to a trusted servant</a>
         </div>
         <p class="gal-consent">
           Photos are shared with the fellowship's consent. To object to a photo being published,
@@ -257,13 +271,16 @@
   </main>
 
   <footer>
-    <div class="gal-wrap">
-      <arrival-footer></arrival-footer>
-      <div style="margin-top:1.2rem">
-        <div>The PIR® Gallery · part of <a href="https://psychedelicsinrecovery.github.io/">the fellowship's GitHub home</a>.</div>
-        <div>Psychedelics In Recovery™ – PIR® · <a href="https://www.psychedelicsinrecovery.org/">psychedelicsinrecovery.org</a> · served from <a href="https://github.com/psychedelicsinrecovery/gallery">GitHub</a></div>
-        <div>Photographs belong to the members who made them; shared here with the fellowship's consent.</div>
+    <div class="wrap pir-foot">
+      <div>
+        <a class="brand" href="https://psychedelicsinrecovery.github.io/">
+          <img src="favicon.svg" alt="" width="34" height="34" />
+          <span class="arr-brand-text">Gallery <small>PIR®</small></span>
+        </a>
+        <span style="display:block;margin-top:0.7rem;max-width:34ch">The photo albums of Psychedelics In Recovery™ – PIR®, kept on the fellowship's own ground.</span>
+        <a class="tended" href="https://psychedelicsinrecovery.github.io/catalyst-desk-public/"><span class="cat-mark"></span>Tended by <b>C.A.T.A.L.Y.S.T.</b>, PIR®'s helper fleet</a>
       </div>
+      <arrival-footer></arrival-footer>
     </div>
   </footer>
 
