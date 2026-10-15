@@ -22,7 +22,7 @@
   <style>
     /* The Gallery's own layer. All custom tokens are site-prefixed (--gal-*) on purpose:
        the kit already owns --ink, --muted, --accent and friends, and borrowing their names
-         collided with them (--ink is a gradient in the kit, not a text color). */
+       collided with them (--ink is a gradient in the kit, not a text color). */
     :root {
       --gal-ink: #f3eee4;
       --gal-muted: rgba(243, 238, 228, 0.66);
@@ -57,6 +57,17 @@
     .gal-btn { display: inline-flex; align-items: center; gap: 0.55rem; font-family: var(--gal-sans); font-weight: 700; font-size: 0.95rem; padding: 0.72rem 1.35rem; border-radius: 999px; text-decoration: none; border: 1px solid var(--gal-line); color: var(--gal-ink); background: var(--gal-panel); transition: transform 0.15s, border-color 0.15s; cursor: pointer; }
     .gal-btn:hover { transform: translateY(-2px); border-color: rgba(232, 180, 90, 0.55); }
     .gal-btn.primary { background: linear-gradient(120deg, var(--gal-violet), var(--gal-gold)); color: #17120a; border-color: transparent; }
+
+    /* The marquee — what the albums will hold, looping gently. Pure CSS, pauses on hover. */
+    .gal-marquee { overflow: hidden; border-block: 1px solid var(--gal-line); background: rgba(255, 255, 255, 0.03); margin: 1.8rem 0 0.4rem; }
+    .gal-marquee-label { max-width: 1180px; margin: 0 auto; padding: 0.8rem clamp(1rem, 4vw, 2.5rem) 0; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gal-gold); }
+    .gal-track { display: flex; gap: 2.75rem; width: max-content; padding: 0.9rem 0; animation: gal-scroll 42s linear infinite; }
+    .gal-marquee:hover .gal-track { animation-play-state: paused; }
+    .gal-track span { display: inline-flex; align-items: center; gap: 0.55rem; font-family: var(--gal-serif); font-size: 1rem; color: var(--gal-muted); white-space: nowrap; }
+    .gal-track i { color: var(--gal-gold); }
+    .gal-track em { font-style: normal; color: var(--gal-violet); }
+    @keyframes gal-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) { .gal-track { animation: none; flex-wrap: wrap; width: auto; justify-content: center; } }
 
     /* Album spot cards — the entry-portal card language */
     .gal-band { padding: clamp(1.6rem, 4vw, 2.6rem) 0; }
@@ -164,7 +175,41 @@
           <a class="gal-btn" href="https://psychedelicsinrecovery.github.io/convention-astro/"><i class="ph-fill ph-confetti"></i> The Convention site</a>
         </div>
       </section>
+    </div>
 
+    <!-- The marquee: a gentle, endless loop of what the albums will hold. Placeholders until the
+         photos land — swap the list as real albums fill in. Decorative; pauses on hover. -->
+    <div class="gal-marquee" role="img" aria-label="A scrolling preview of the moments the albums will hold">
+      <div class="gal-marquee-label">In the albums, moments like these</div>
+      <div class="gal-track" aria-hidden="true">
+        <span><i class="ph-fill ph-confetti"></i> Opening ceremony</span>
+        <span><i class="ph-fill ph-microphone"></i> Panels &amp; speakers</span>
+        <span><i class="ph-fill ph-users-three"></i> The first hug in person</span>
+        <span><i class="ph-fill ph-campfire"></i> Candlelight meetings</span>
+        <span><i class="ph-fill ph-paint-brush"></i> Art &amp; creativity</span>
+        <span><i class="ph-fill ph-person-simple-walk"></i> Movement &amp; zen</span>
+        <span><i class="ph-fill ph-fork-knife"></i> Fellowship dinners</span>
+        <span><i class="ph-fill ph-music-notes"></i> Music night</span>
+        <span><i class="ph-fill ph-book-open-text"></i> <em>Living Psychedelic Sober</em> launch</span>
+        <span><i class="ph-fill ph-spiral"></i> Meow Wolf night out</span>
+        <span><i class="ph-fill ph-hands-clapping"></i> Service &amp; gratitude</span>
+        <span><i class="ph-fill ph-heart"></i> Recovery, together</span>
+        <span><i class="ph-fill ph-confetti"></i> Opening ceremony</span>
+        <span><i class="ph-fill ph-microphone"></i> Panels &amp; speakers</span>
+        <span><i class="ph-fill ph-users-three"></i> The first hug in person</span>
+        <span><i class="ph-fill ph-campfire"></i> Candlelight meetings</span>
+        <span><i class="ph-fill ph-paint-brush"></i> Art &amp; creativity</span>
+        <span><i class="ph-fill ph-person-simple-walk"></i> Movement &amp; zen</span>
+        <span><i class="ph-fill ph-fork-knife"></i> Fellowship dinners</span>
+        <span><i class="ph-fill ph-music-notes"></i> Music night</span>
+        <span><i class="ph-fill ph-book-open-text"></i> <em>Living Psychedelic Sober</em> launch</span>
+        <span><i class="ph-fill ph-spiral"></i> Meow Wolf night out</span>
+        <span><i class="ph-fill ph-hands-clapping"></i> Service &amp; gratitude</span>
+        <span><i class="ph-fill ph-heart"></i> Recovery, together</span>
+      </div>
+    </div>
+
+    <div class="gal-wrap">
       <section class="gal-story">
         <h2><i class="ph-fill ph-sparkle"></i> How this gallery began</h2>
         <p>
@@ -192,13 +237,15 @@
       <section class="gal-add">
         <h2><i class="ph-fill ph-hand-heart"></i> Add your photos</h2>
         <p>
-          Were you there? Two paths, both easy: upload straight to the shared Drive folder, or walk
-          the full process yourself — naming, captions, credits and all — in the walkthrough. If you
-          would rather not appear in a photo, tell a trusted servant and it comes down immediately:
-          the fellowship's consent comes first.
+          Were you there? Three paths, all easy: upload straight to the shared Drive folder, use
+          GitHub's own web interface from your browser (no terminal needed), or walk the full
+          process yourself — naming, captions, credits and all — in the walkthrough. If you would
+          rather not appear in a photo, tell a trusted servant and it comes down immediately: the
+          fellowship's consent comes first.
         </p>
         <div class="row">
           <a class="gal-btn primary" href="walkthrough.html"><i class="ph-fill ph-map-trifold"></i> Walk through the process</a>
+          <a class="gal-btn" href="walkthrough.html#web"><i class="ph-fill ph-browser"></i> The browser-only path</a>
           <a class="gal-btn" href="https://drive.google.com/drive/folders/1zUL1fHkDlWJLKrtHzfToceFoFl-PiTu?usp=sharing" target="_blank" rel="noopener"><i class="ph-fill ph-upload-simple"></i> Upload to the Drive folder</a>
         </div>
         <p class="gal-consent">
@@ -210,10 +257,13 @@
   </main>
 
   <footer>
-    <div class="gal-wrap" style="display:grid;gap:.4rem">
-      <div>The PIR® Gallery · part of <a href="https://psychedelicsinrecovery.github.io/">the fellowship's GitHub home</a>.</div>
-      <div>Psychedelics In Recovery™ – PIR® · <a href="https://www.psychedelicsinrecovery.org/">psychedelicsinrecovery.org</a> · served from <a href="https://github.com/psychedelicsinrecovery/gallery">GitHub</a></div>
-      <div>Photographs belong to the members who made them; shared here with the fellowship's consent.</div>
+    <div class="gal-wrap">
+      <arrival-footer></arrival-footer>
+      <div style="margin-top:1.2rem">
+        <div>The PIR® Gallery · part of <a href="https://psychedelicsinrecovery.github.io/">the fellowship's GitHub home</a>.</div>
+        <div>Psychedelics In Recovery™ – PIR® · <a href="https://www.psychedelicsinrecovery.org/">psychedelicsinrecovery.org</a> · served from <a href="https://github.com/psychedelicsinrecovery/gallery">GitHub</a></div>
+        <div>Photographs belong to the members who made them; shared here with the fellowship's consent.</div>
+      </div>
     </div>
   </footer>
 
@@ -234,7 +284,7 @@
   </div>
 
   <!-- The kit override: this site's name and welcome, read by the kit before it runs. -->
-  <script is-inline="">
+  <script>
     window.ARRIVAL_SITE = {
       name: "the PIR® Gallery",
       what: "This is the fellowship's own gallery of Psychedelics In Recovery™ – PIR®: every album the fellowship makes, kept on its own ground. To add your photos, open the walkthrough.",
