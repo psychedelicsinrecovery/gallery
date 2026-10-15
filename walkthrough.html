@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Add Your Photos · The PIR® Gallery · Psychedelics In Recovery™ – PIR®</title>
-  <meta name="description" content="How to add your photos to the PIR® Gallery — three paths: upload to the shared Drive folder, use GitHub in your browser, or walk the full process in your terminal." />
+  <meta name="description" content="How to add your photos to the PIR® Gallery — three paths: send them to a trusted servant, use GitHub in your browser, or walk the full process in your terminal." />
   <meta name="theme-color" content="#06050e" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -32,12 +32,14 @@
     #starfield-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
     .gal-wrap { max-width: 900px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); position: relative; z-index: 5; }
     header.top { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(12px); background: rgba(6, 5, 14, 0.55); border-bottom: 1px solid var(--gal-line); }
-    header.top .gal-wrap { display: flex; align-items: center; gap: 1rem; min-height: 64px; }
-    .gal-brand { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--gal-ink); font-family: var(--gal-serif); font-weight: 700; font-size: 1.1rem; }
-    .gal-brand img { border-radius: 9px; }
-    .gal-brand small { font-family: var(--gal-sans); font-weight: 600; font-size: 0.72rem; color: var(--gal-gold); letter-spacing: 0.08em; }
+    header.top .wrap { display: flex; align-items: center; gap: 1rem; min-height: 64px; max-width: 1180px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
+    .brand { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--gal-ink); font-family: var(--gal-serif); font-weight: 700; font-size: 1.1rem; }
+    .brand img { border-radius: 9px; }
+    .brand small { font-family: var(--gal-sans); font-weight: 600; font-size: 0.72rem; color: var(--gal-gold); letter-spacing: 0.08em; margin-left: 0.4rem; }
     main { position: relative; z-index: 10; }
-    .gal-hero { padding: clamp(2.4rem, 6vw, 4rem) 0 1.2rem; }
+    .gal-hero { padding: clamp(2.4rem, 6vw, 4rem) 0 1.2rem; text-align: center; }
+    .gal-hero .gal-kicker { margin-inline: auto; }
+    .gal-hero .gal-lede { margin-inline: auto; }
     .gal-kicker { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gal-gold); border: 1px solid rgba(232, 180, 90, 0.35); border-radius: 999px; padding: 0.35rem 0.9rem; background: rgba(232, 180, 90, 0.08); }
     h1 { font-family: var(--gal-serif); font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.08; letter-spacing: -0.02em; margin: 1rem 0 0.7rem; color: var(--gal-ink); }
     .gal-lede { font-size: clamp(1rem, 1.5vw, 1.14rem); color: var(--gal-muted); max-width: 62ch; line-height: 1.6; }
@@ -69,16 +71,22 @@
     footer { position: relative; z-index: 10; border-top: 1px solid var(--gal-line); margin-top: 3rem; padding: 2.2rem 0 2.6rem; color: var(--gal-muted); font-size: 0.84rem; line-height: 1.7; }
     footer a { color: var(--gal-gold); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
+    /* hub parity for the footer chrome */
+    .pir-foot { display: grid; grid-template-columns: 1.2fr 2fr; gap: 2rem; align-items: start; max-width: 1180px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); font-family: var(--gal-sans); }
+    .tended { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.8rem; color: rgba(243, 238, 228, 0.66); text-decoration: none; font-size: 0.8rem; }
+    .tended b { color: var(--gal-gold); font-family: var(--gal-serif); }
+    .cat-mark { width: 0.85rem; height: 0.85rem; border-radius: 50%; background: conic-gradient(from 180deg, #e8b45a, #a78bfa, #e8b45a); }
+    @media (max-width: 860px) { .pir-foot { grid-template-columns: 1fr; } }
     @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
   </style>
 </head>
 <body>
   <canvas id="starfield-canvas" aria-hidden="true"></canvas>
   <header class="top">
-    <div class="gal-wrap">
-      <a class="gal-brand" href="index.html">
+    <div class="wrap">
+      <a class="brand" href="index.html">
         <img src="favicon.svg" alt="" width="34" height="34" />
-        <span>Gallery <small>PIR®</small></span>
+        <span class="arr-brand-text">Gallery <small>PIR®</small></span>
       </a>
       <arrival-nav></arrival-nav>
       <arrival-controls></arrival-controls>
@@ -102,8 +110,8 @@
         <div class="gal-path">
           <i class="ph-fill ph-paper-plane-tilt"></i>
           <h3>The send-it-in path</h3>
-          <p>Upload your photos to the shared Drive folder. A trusted servant will name them, caption them, and place them in the right album with care.</p>
-          <a class="gal-btn primary" href="https://drive.google.com/drive/folders/1zUL1fHkDlWJLKrtHzfToceFoFl-PiTu?usp=sharing" target="_blank" rel="noopener"><i class="ph-fill ph-upload-simple"></i> Open the Drive folder</a>
+          <p>Send your photos to a trusted servant — through PIR's contact page, or the committee channels you already know. A trusted servant will name them, caption them, and place them in the right album with care.</p>
+          <a class="gal-btn primary" href="https://www.psychedelicsinrecovery.org/contact/" target="_blank" rel="noopener"><i class="ph-fill ph-hand-heart"></i> Reach out to a trusted servant</a>
         </div>
         <div class="gal-path" id="web">
           <i class="ph-fill ph-browser"></i>
@@ -168,7 +176,7 @@
         <li>
           <div>
             <h3>Gather your photos</h3>
-            <p>Collect the photos you'd like to share — from your phone, camera, or the shared Drive folder. Pick the keepers: the gallery favors moments over quantity.</p>
+            <p>Collect the photos you'd like to share — from your phone or camera. Pick the keepers: the gallery favors moments over quantity.</p>
           </div>
         </li>
         <li>
@@ -221,7 +229,7 @@ git push</pre>
           <li><b>Anonymity first.</b> Credits use first name + last initial ("Maria R."). If a photo identifies someone who'd rather not appear, it comes down.</li>
           <li><b>Consent is the tradition.</b> Every photo is shared with the fellowship's consent. To object to any photo, contact the gallery's trusted servants — removal is immediate and without question.</li>
           <li><b>Order matters.</b> The number prefix (<code>01-</code>, <code>02-</code>…) sets the order photos appear in.</li>
-          <li><b>No tools at all?</b> The send-it-in path exists exactly for this. Upload to the Drive folder and a trusted servant handles the rest.</li>
+          <li><b>No tools at all?</b> The send-it-in path exists exactly for this. Send your photos to a trusted servant and they handle the rest.</li>
           <li><b>Big files are fine</b> — Pages serves them quickly worldwide. Very large sets may be resized by the trusted servants to keep the gallery quick.</li>
         </ul>
       </div>
@@ -240,12 +248,16 @@ git push</pre>
   </main>
 
   <footer>
-    <div class="gal-wrap">
-      <arrival-footer></arrival-footer>
-      <div style="margin-top:1.2rem">
-        <div>The PIR® Gallery · a keep-sake of <a href="https://psychedelicsinrecovery.github.io/">the fellowship's GitHub home</a>.</div>
-        <div>Psychedelics In Recovery™ – PIR® · <a href="https://www.psychedelicsinrecovery.org/">psychedelicsinrecovery.org</a></div>
+    <div class="wrap pir-foot">
+      <div>
+        <a class="brand" href="https://psychedelicsinrecovery.github.io/">
+          <img src="favicon.svg" alt="" width="34" height="34" />
+          <span class="arr-brand-text">Gallery <small>PIR®</small></span>
+        </a>
+        <span style="display:block;margin-top:0.7rem;max-width:34ch">The walkthrough for adding your photos to the albums of Psychedelics In Recovery™ – PIR®.</span>
+        <a class="tended" href="https://psychedelicsinrecovery.github.io/catalyst-desk-public/"><span class="cat-mark"></span>Tended by <b>C.A.T.A.L.Y.S.T.</b>, PIR®'s helper fleet</a>
       </div>
+      <arrival-footer></arrival-footer>
     </div>
   </footer>
 
@@ -253,7 +265,7 @@ git push</pre>
   <script>
     window.ARRIVAL_SITE = {
       name: "the PIR® Gallery",
-      what: "This is the walkthrough for adding your photos to the fellowship's gallery. Three paths: send them in through the Drive folder, use GitHub in your browser, or follow the steps and see them live in about a minute.",
+      what: "This is the walkthrough for adding your photos to the fellowship's gallery. Three paths: send them to a trusted servant, use GitHub in your browser, or follow the steps and see them live in about a minute.",
     };
   </script>
   <script src="https://psychedelicsinrecovery.github.io/starfield.js" defer></script>
