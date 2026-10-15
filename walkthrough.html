@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en" data-arrival-site="gallery" data-arrival-splash="off">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Add Your Photos · The PIR® Gallery · Psychedelics In Recovery™ – PIR®</title>
+  <meta name="description" content="How to add your photos to the PIR® Gallery — two paths: upload to the shared Drive folder, or walk the full process yourself." />
+  <meta name="theme-color" content="#06050e" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/fill/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/regular/style.css" />
+  <link rel="stylesheet" href="https://psychedelicsinrecovery.github.io/arrival/arrival.css" />
+  <link rel="stylesheet" href="https://psychedelicsinrecovery.github.io/arrival/org.css" />
+  <link rel="stylesheet" href="https://psychedelicsinrecovery.github.io/alex-desk-public/assets/alex.css" />
+  <style>
+    :root {
+      --g-ink: var(--ink, #f3eee4);
+      --g-muted: var(--muted, rgba(243,238,228,.62));
+      --g-gold: var(--gold, #e8b45a);
+      --g-violet: var(--violet, #a78bfa);
+      --g-panel: var(--panel, rgba(255,255,255,.045));
+      --g-line: var(--line, rgba(255,255,255,.11));
+      --g-serif: "Fraunces", Georgia, serif;
+      --g-sans: "Manrope", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; color: var(--g-ink); background: #06050e; font-family: var(--g-sans); -webkit-font-smoothing: antialiased; }
+    #starfield-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    .wrap { max-width: 900px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); position: relative; z-index: 5; }
+    header.top { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(12px); background: rgba(6,5,14,.55); border-bottom: 1px solid var(--g-line); }
+    header.top .wrap { display: flex; align-items: center; gap: 1rem; min-height: 64px; }
+    .brand { display: inline-flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--g-ink); font-family: var(--g-serif); font-weight: 700; font-size: 1.1rem; }
+    .brand img { border-radius: 9px; }
+    .brand small { font-family: var(--g-sans); font-weight: 600; font-size: .72rem; color: var(--g-gold); letter-spacing: .08em; }
+    .top-links { margin-left: auto; display: flex; gap: .3rem; flex-wrap: wrap; }
+    .top-links a { display: inline-flex; align-items: center; gap: .45rem; color: var(--g-muted); text-decoration: none; font-size: .88rem; font-weight: 600; padding: .45rem .8rem; border-radius: 999px; }
+    .top-links a:hover { color: var(--g-ink); background: var(--g-panel); }
+    .hero { padding: clamp(2.4rem, 6vw, 4rem) 0 1.2rem; }
+    .kicker { display: inline-flex; align-items: center; gap: .5rem; font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--g-gold); border: 1px solid rgba(232,180,90,.35); border-radius: 999px; padding: .35rem .9rem; background: rgba(232,180,90,.08); }
+    h1 { font-family: var(--g-serif); font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.08; letter-spacing: -.02em; margin: 1rem 0 .7rem; }
+    .lede { font-size: clamp(1rem, 1.5vw, 1.14rem); color: var(--g-muted); max-width: 62ch; line-height: 1.6; }
+    h2 { font-family: var(--g-serif); font-size: 1.5rem; margin: 2.4rem 0 .8rem; }
+    a.inline { color: var(--g-gold); text-decoration: none; }
+    a.inline:hover { text-decoration: underline; }
+
+    .paths { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 1rem; margin: 1.4rem 0; }
+    .path { border: 1px solid var(--g-line); border-radius: 18px; background: var(--g-panel); padding: 1.3rem; }
+    .path i { font-size: 1.5rem; color: var(--g-gold); }
+    .path h3 { font-family: var(--g-serif); font-size: 1.1rem; margin: .6rem 0 .4rem; }
+    .path p { margin: 0 0 .8rem; font-size: .89rem; color: var(--g-muted); line-height: 1.55; }
+    .btn { display: inline-flex; align-items: center; gap: .55rem; font-weight: 700; font-size: .92rem; padding: .65rem 1.25rem; border-radius: 999px; text-decoration: none; border: 1px solid var(--g-line); color: var(--g-ink); background: var(--g-panel); transition: transform .15s, border-color .15s; }
+    .btn:hover { transform: translateY(-2px); border-color: rgba(232,180,90,.55); }
+    .btn.primary { background: linear-gradient(120deg, var(--g-violet), var(--g-gold)); color: #17120a; border-color: transparent; }
+
+    ol.steps { list-style: none; counter-reset: st; padding: 0; margin: 1.2rem 0; display: flex; flex-direction: column; gap: .9rem; }
+    ol.steps li { counter-increment: st; display: grid; grid-template-columns: 2.6rem 1fr; gap: .9rem; border: 1px solid var(--g-line); border-radius: 18px; background: var(--g-panel); padding: 1.1rem 1.2rem; }
+    ol.steps li::before { content: counter(st); font-family: var(--g-serif); font-size: 1.5rem; font-weight: 700; color: var(--g-gold); line-height: 1; }
+    ol.steps h3 { font-family: var(--g-serif); font-size: 1.06rem; margin: .15rem 0 .35rem; }
+    ol.steps p { margin: 0; font-size: .9rem; color: var(--g-muted); line-height: 1.6; }
+    ol.steps code { font-family: "JetBrains Mono", monospace; font-size: .84em; background: rgba(255,255,255,.07); border: 1px solid var(--g-line); border-radius: 6px; padding: .08em .4em; }
+    pre { font-family: "JetBrains Mono", monospace; font-size: .85rem; background: rgba(255,255,255,.05); border: 1px solid var(--g-line); border-radius: 12px; padding: 1rem 1.2rem; overflow-x: auto; line-height: 1.6; color: var(--g-ink); }
+
+    .notes { border: 1px solid var(--g-line); border-radius: 18px; background: var(--g-panel); padding: 1.3rem 1.4rem; margin: 1.4rem 0; }
+    .notes ul { margin: .4rem 0 0; padding-left: 1.2rem; color: var(--g-muted); font-size: .9rem; line-height: 1.7; }
+    .notes b { color: var(--g-ink); }
+    .consent { font-size: .82rem; color: var(--g-muted); border-left: 2px solid var(--g-gold); padding-left: .8rem; line-height: 1.6; margin: 1.6rem 0; }
+    footer { position: relative; z-index: 5; border-top: 1px solid var(--g-line); margin-top: 3rem; padding: 2.2rem 0 2.6rem; color: var(--g-muted); font-size: .84rem; line-height: 1.7; }
+    footer a { color: var(--g-gold); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <canvas id="starfield-canvas" aria-hidden="true"></canvas>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="index.html">
+        <img src="favicon.svg" alt="" width="34" height="34" />
+        <span>Gallery <small>PIR®</small></span>
+      </a>
+      <nav class="top-links" aria-label="Walkthrough navigation">
+        <a href="index.html"><i class="ph-fill ph-images"></i> Back to the albums</a>
+        <a href="https://drive.google.com/drive/folders/1zUL1fHkDlWJLKrtHzfToceFoFl-PiTu?usp=sharing" target="_blank" rel="noopener"><i class="ph-fill ph-upload-simple"></i> Drive folder</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <section class="hero">
+        <span class="kicker"><i class="ph-fill ph-map-trifold"></i> The whole process, end to end</span>
+        <h1>Add your photos to the PIR® Gallery</h1>
+        <p class="lede">
+          Thank you for sharing what you captured — photos are how the fellowship remembers its
+          gatherings. There are two paths: the <strong style="color:var(--g-ink)">send-it-in path</strong> (two minutes, no
+          tools) and the <strong style="color:var(--g-ink)">do-it-with-us path</strong> (you touch the repository yourself and
+          see your photos live in about a minute). Both end in the same place: your photos in the
+          fellowship's own gallery, kept on its own ground.
+        </p>
+      </section>
+
+      <h2>Choose your path</h2>
+      <div class="paths">
+        <div class="path">
+          <i class="ph-fill ph-paper-plane-tilt"></i>
+          <h3>The send-it-in path</h3>
+          <p>Upload your photos to the shared Drive folder. A trusted servant will name them, caption them, and place them in the right album with care.</p>
+          <a class="btn primary" href="https://drive.google.com/drive/folders/1zUL1fHkDlWJLKrtHzfToceFoFl-PiTu?usp=sharing" target="_blank" rel="noopener"><i class="ph-fill ph-upload-simple"></i> Open the Drive folder</a>
+        </div>
+        <div class="path">
+          <i class="ph-fill ph-git-branch"></i>
+          <h3>The do-it-with-us path</h3>
+          <p>For members comfortable with folders and a terminal — the full walkthrough is below. Captions, credits and ordering are all in your hands.</p>
+          <a class="btn" href="#steps"><i class="ph-fill ph-arrow-down"></i> Walk the full process</a>
+        </div>
+      </div>
+
+      <h2 id="steps">The full walkthrough</h2>
+      <ol class="steps">
+        <li>
+          <div>
+            <h3>Gather your photos</h3>
+            <p>Collect the photos you'd like to share — from your phone, camera, or the shared Drive folder. Pick the keepers: the gallery favors moments over quantity.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Name them with care</h3>
+            <p>Rename each file with a number prefix so the order is right, and describe the moment: <code>01-opening-ceremony.jpg</code>, <code>02-closing-circle.jpg</code>. The filename becomes the caption. Adding a credit? Write <code>photo-by-maria-r</code> in the filename and the gallery shows "Maria R." — first name and last initial, per the fellowship's anonymity tradition.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Place them in an album folder</h3>
+            <p>Each album is a folder under <code>assets/albums/</code>. For the Denver 2026 gathering, that's <code>assets/albums/convention-2026/</code>. A new gathering gets a new folder — its id, like <code>retreat-2027</code>.</p>
+            <pre>gallery/
+└── assets/
+    └── albums/
+        └── convention-2026/
+            ├── 01-opening-ceremony.jpg
+            ├── 02-panel-the-first-decade.jpg
+            └── 03-photo-by-maria-r.jpg</pre>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Rebuild the manifest</h3>
+            <p>The gallery page reads one file, <code>photos.json</code>. A tiny zero-dependency script scans your album folders and writes it — captions, credits, and photo dimensions included:</p>
+            <pre>python3 tools/build_manifest.py</pre>
+            <p>Optional: an album can carry its own details in <code>assets/albums/&lt;album-id&gt;/_meta.json</code> — a title, the dates, the place, a Pixieset link, even a link to its Astro site.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Commit and push</h3>
+            <p>Send the photos and the rebuilt manifest to the repository:</p>
+            <pre>git add .
+git commit -m "Add photos to the convention-2026 album"
+git push</pre>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Watch it go live</h3>
+            <p>GitHub Actions publishes the gallery in about a minute. Open <a class="inline" href="index.html">the gallery</a> and your photos are there — browsable, captioned, and downloadable by the fellowship.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="notes">
+        <h3 style="font-family:var(--g-serif);margin:.2rem 0 .5rem">Good to know</h3>
+        <ul>
+          <li><b>Anonymity first.</b> Credits use first name + last initial ("Maria R."). If a photo identifies someone who'd rather not appear, it comes down.</li>
+          <li><b>Consent is the tradition.</b> Every photo is shared with the fellowship's consent. To object to any photo, contact the gallery's trusted servants — removal is immediate and without question.</li>
+          <li><b>Order matters.</b> The number prefix (<code>01-</code>, <code>02-</code>…) sets the order photos appear in.</li>
+          <li><b>No tools?</b> The send-it-in path exists exactly for this. Upload to the Drive folder and a trusted servant handles the rest.</li>
+          <li><b>Big files are fine</b> — GitHub Pages serves them quickly worldwide. Very large sets may be resized by the trusted servants to keep the gallery quick.</li>
+        </ul>
+      </div>
+
+      <p class="consent">
+        Photos are shared with the fellowship's consent. If you object to a photo being published,
+        contact the gallery's trusted servants and it will be removed immediately. Photographs belong
+        to the members who made them.
+      </p>
+
+      <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin:1.6rem 0 2rem">
+        <a class="btn primary" href="index.html"><i class="ph-fill ph-images"></i> See the albums</a>
+        <a class="btn" href="https://github.com/psychedelicsinrecovery/gallery" target="_blank" rel="noopener"><i class="ph-fill ph-github-logo"></i> The repository</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div>The PIR® Gallery · a keep-sake of <a href="https://psychedelicsinrecovery.github.io/">the fellowship's GitHub home</a>.</div>
+      <div>Psychedelics In Recovery™ – PIR® · <a href="https://www.psychedelicsinrecovery.org/">psychedelicsinrecovery.org</a></div>
+    </div>
+  </footer>
+  <script src="https://psychedelicsinrecovery.github.io/starfield.js" defer></script>
+</body>
+</html>

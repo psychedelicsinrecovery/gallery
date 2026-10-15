@@ -1,11 +1,23 @@
-# 🖼️ The PIR® Convention Gallery
+# 🖼️ The PIR® Gallery
 
-The fellowship's own photo gallery for **Psychedelics In Recovery™ – PIR®** — the gatherings,
-kept on GitHub. Live at: **https://psychedelicsinrecovery.github.io/gallery/**
+> ### Hi — are you a member here looking to upload photos?
+>
+> You're in the right place, and it's easier than it looks. **[Let us walk you through the process →](https://psychedelicsinrecovery.github.io/gallery/walkthrough.html)**
+>
+> Two paths: upload to the shared Drive folder and a trusted servant places your photos with care —
+> or follow the full walkthrough and see them live in about a minute.
+
+The fellowship's own photo gallery for **Psychedelics In Recovery™ – PIR®** — every gathering's
+albums, kept on GitHub. Live at: **https://psychedelicsinrecovery.github.io/gallery/**
 
 A sibling of the [Convention site](https://github.com/psychedelicsinrecovery/convention-astro)
 and the [AstroLog](https://github.com/psychedelicsinrecovery/changelog-astro). One night sky,
 many desks.
+
+> 💡 **How this gallery began:** a WhatsApp request to connect Anne R.'s Pixieset album for the
+> Inaugural Convention went wonderfully rogue — a shared Drive folder gathered the fellowship's
+> photos from Denver, and the fellowship decided the photos of its recovery deserve a home it owns.
+> The Pixieset album and Drive folder that sparked it are woven into the gallery itself.
 
 ## Why a gallery of our own
 
@@ -13,10 +25,14 @@ Pixieset is lovely for sharing right now — and this is the version the fellows
 
 - **No platform.** The photos live in this repository; the gallery is a single HTML page.
 - **No cost, no expiry.** GitHub Pages serves it free, fast, worldwide — until the day we outgrow GitHub (and what a day that will be).
+- **Many albums, one home.** Not tied to one event: conventions, gatherings, service years — each album is a folder and a card.
 - **Anonymity-aware.** Captions use first name + last initial, per the fellowship's tradition.
 - **Consent first.** Any photo comes down on request to the gallery's trusted servants.
 
 ## The photo workflow (for trusted servants and volunteers)
+
+The full, friendly version lives at the [walkthrough page](https://psychedelicsinrecovery.github.io/gallery/walkthrough.html).
+The short version:
 
 1. Photos arrive in the shared [Drive folder](https://drive.google.com/drive/folders/1zUL1fHkDlWJLKrtHzfToceFoFl-PiTu?usp=sharing)
    (or any way they arrive — WhatsApp, email, a USB stick at a convention).
@@ -33,7 +49,13 @@ Pixieset is lovely for sharing right now — and this is the version the fellows
 4. Optional per-album details go in `assets/albums/<album-id>/_meta.json`:
 
    ```json
-   { "title": "The Inaugural PIR® Convention", "when": "October 8-11, 2026", "place": "Denver, Colorado" }
+   {
+     "title": "The Inaugural PIR® Convention",
+     "when": "October 8-11, 2026",
+     "place": "Denver, Colorado",
+     "featured": true,
+     "astro": "https://psychedelicsinrecovery.github.io/convention-astro/"
+   }
    ```
 
 5. Commit and push. GitHub Actions publishes the gallery in about a minute.
@@ -48,10 +70,11 @@ python3 -m http.server 8000
 ## The structure
 
 ```
-index.html      the whole gallery — masonry grid, album filters, lightbox, downloads
-photos.json     the manifest the page reads (generated or hand-edited)
-assets/         the photographs, in album folders
-tools/          build_manifest.py — scans assets/ and writes photos.json
+index.html         the gallery portal — album spot cards, origin story, masonry, lightbox
+walkthrough.html   the member-facing walkthrough (linked from the README's opening blockquote)
+photos.json        the manifest the page reads (generated or hand-edited)
+assets/            the photographs, in album folders
+tools/             build_manifest.py — scans assets/ and writes photos.json
 ```
 
 ## Trademark
