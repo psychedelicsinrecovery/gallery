@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en" data-arrival-site="convention" data-arrival-splash="off">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The PIR® Convention Gallery · Psychedelics In Recovery™ – PIR®</title>
+  <meta name="description" content="The fellowship's own photo gallery — the gatherings of Psychedelics In Recovery™ – PIR®, kept on the fellowship's own ground." />
+  <meta name="theme-color" content="#06050e" />
+  <meta property="og:site_name" content="PIR® Convention Gallery" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="The PIR® Convention Gallery" />
+  <meta property="og:description" content="The fellowship's shared photos from its gatherings — browsable, downloadable, kept on GitHub." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/fill/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/regular/style.css" />
+  <link rel="stylesheet" href="https://psychedelicsinrecovery.github.io/arrival/arrival.css" />
+  <link rel="stylesheet" href="https://psychedelicsinrecovery.github.io/arrival/org.css" />
+  <link rel="stylesheet" href="https://psychedelicsinrecovery.github.io/alex-desk-public/assets/alex.css" />
+  <style>
+    /* The gallery's own layer, in the fellowship's voice. Tokens fall back if the kit is away. */
+    :root {
+      --g-ink: var(--ink, #f3eee4);
+      --g-muted: var(--muted, rgba(243,238,228,.62));
+      --g-gold: var(--gold, #e8b45a);
+      --g-violet: var(--violet, #a78bfa);
+      --g-panel: var(--panel, rgba(255,255,255,.045));
+      --g-line: var(--line, rgba(255,255,255,.11));
+      --g-serif: "Fraunces", Georgia, serif;
+      --g-sans: "Manrope", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; min-height: 100vh; color: var(--g-ink);
+      background: #06050e; font-family: var(--g-sans); -webkit-font-smoothing: antialiased;
+    }
+    #starfield-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    .wrap { max-width: 1180px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); position: relative; z-index: 5; }
+    header.top { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(12px); background: rgba(6,5,14,.55); border-bottom: 1px solid var(--g-line); }
+    header.top .wrap { display: flex; align-items: center; gap: 1rem; min-height: 64px; }
+    .brand { display: inline-flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--g-ink); font-family: var(--g-serif); font-weight: 700; font-size: 1.1rem; }
+    .brand img { border-radius: 9px; }
+    .brand small { font-family: var(--g-sans); font-weight: 600; font-size: .72rem; color: var(--g-gold); letter-spacing: .08em; }
+    .top-links { margin-left: auto; display: flex; gap: .3rem; flex-wrap: wrap; }
+    .top-links a { display: inline-flex; align-items: center; gap: .45rem; color: var(--g-muted); text-decoration: none; font-size: .88rem; font-weight: 600; padding: .45rem .8rem; border-radius: 999px; }
+    .top-links a:hover { color: var(--g-ink); background: var(--g-panel); }
+
+    .hero { padding: clamp(2.6rem, 7vw, 5rem) 0 1.6rem; }
+    .kicker { display: inline-flex; align-items: center; gap: .5rem; font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--g-gold); border: 1px solid rgba(232,180,90,.35); border-radius: 999px; padding: .35rem .9rem; background: rgba(232,180,90,.08); }
+    h1 { font-family: var(--g-serif); font-size: clamp(2.2rem, 5.5vw, 3.8rem); line-height: 1.05; letter-spacing: -.02em; margin: 1rem 0 .7rem; }
+    .lede { font-size: clamp(1rem, 1.5vw, 1.18rem); color: var(--g-muted); max-width: 62ch; line-height: 1.6; }
+    .lede a { color: var(--g-gold); text-decoration: none; }
+    .lede a:hover { text-decoration: underline; }
+
+    .chips { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.4rem 0 2rem; }
+    .chip { display: inline-flex; align-items: center; gap: .45rem; font-family: var(--g-sans); font-size: .86rem; font-weight: 600; color: var(--g-muted); border: 1px solid var(--g-line); background: var(--g-panel); border-radius: 999px; padding: .45rem 1rem; cursor: pointer; transition: all .15s; }
+    .chip:hover { color: var(--g-ink); border-color: rgba(232,180,90,.5); }
+    .chip[aria-pressed="true"] { color: #17120a; background: linear-gradient(120deg, var(--g-violet), var(--g-gold)); border-color: transparent; }
+    .chip .n { font-size: .74rem; opacity: .8; }
+
+    .album-head { margin: 2.2rem 0 1rem; }
+    .album-head h2 { font-family: var(--g-serif); font-size: 1.6rem; margin: 0 0 .2rem; }
+    .album-head .meta { font-size: .85rem; color: var(--g-muted); }
+    .album-head .ext { display: inline-flex; gap: .6rem; margin-top: .6rem; flex-wrap: wrap; }
+    .album-head .ext a { display: inline-flex; align-items: center; gap: .4rem; font-size: .84rem; font-weight: 600; color: var(--g-ink); text-decoration: none; border: 1px solid var(--g-line); border-radius: 999px; padding: .4rem .85rem; }
+    .album-head .ext a:hover { border-color: rgba(232,180,90,.55); }
+
+    .masonry { columns: 4 240px; column-gap: 12px; }
+    @media (max-width: 900px) { .masonry { columns: 3 200px; } }
+    @media (max-width: 620px) { .masonry { columns: 2 160px; } }
+    .ph { break-inside: avoid; margin: 0 0 12px; position: relative; border-radius: 14px; overflow: hidden; border: 1px solid var(--g-line); background: var(--g-panel); cursor: zoom-in; transition: transform .18s ease, border-color .18s; }
+    .ph:hover { transform: translateY(-3px); border-color: rgba(232,180,90,.5); }
+    .ph img { width: 100%; height: auto; display: block; }
+    .ph .cap { position: absolute; inset: auto 0 0 0; padding: .55rem .7rem; font-size: .78rem; line-height: 1.4; color: var(--g-ink); background: linear-gradient(transparent, rgba(6,5,14,.88)); opacity: 0; transition: opacity .18s; }
+    .ph:hover .cap, .ph:focus .cap { opacity: 1; }
+
+    .empty { border: 1px dashed var(--g-line); border-radius: 18px; padding: 2.4rem 1.6rem; text-align: center; color: var(--g-muted); }
+    .empty i { font-size: 2rem; color: var(--g-gold); }
+    .empty h3 { font-family: var(--g-serif); color: var(--g-ink); margin: .6rem 0 .3rem; font-size: 1.2rem; }
+    .empty p { font-size: .9rem; max-width: 52ch; margin: 0 auto 1rem; line-height: 1.55; }
+
+    .btn { display: inline-flex; align-items: center; gap: .55rem; font-family: var(--g-sans); font-weight: 700; font-size: .95rem; padding: .72rem 1.35rem; border-radius: 999px; text-decoration: none; border: 1px solid var(--g-line); color: var(--g-ink); background: var(--g-panel); transition: transform .15s, border-color .15s; }
+    .btn:hover { transform: translateY(-2px); border-color: rgba(232,180,90,.55); }
+    .btn.primary { background: linear-gradient(120deg, var(--g-violet), var(--g-gold)); color: #17120a; border-color: transparent; }
+
+    .add-card { margin: 2.5rem 0; border: 1px solid var(--g-line); border-radius: 22px; background: linear-gradient(120deg, rgba(167,139,250,.09), rgba(232,180,90,.07)); padding: 1.8rem; display: grid; gap: .8rem; }
+    .add-card h2 { font-family: var(--g-serif); margin: 0; font-size: 1.5rem; }
+    .add-card p { margin: 0; color: var(--g-muted); font-size: .92rem; line-height: 1.55; }
+    .add-card .row { display: flex; gap: .8rem; flex-wrap: wrap; margin-top: .4rem; }
+    .consent { font-size: .8rem; color: var(--g-muted); border-left: 2px solid var(--g-gold); padding-left: .8rem; }
+
+    footer { position: relative; z-index: 5; border-top: 1px solid var(--g-line); margin-top: 3rem; padding: 2.2rem 0 2.6rem; color: var(--g-muted); font-size: .84rem; line-height: 1.7; }
+    footer a { color: var(--g-gold); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .tm { font-family: var(--g-sans); font-size: .78rem; opacity: .8; }
+
+    /* Lightbox */
+    .lb { position: fixed; inset: 0; z-index: 90; display: none; background: rgba(4,3,10,.92); backdrop-filter: blur(8px); }
+    .lb.open { display: grid; grid-template-rows: auto 1fr auto; }
+    .lb .lb-top { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.2rem; }
+    .lb .count { font-family: var(--g-serif); color: var(--g-muted); font-size: .95rem; }
+    .lb .count b { color: var(--g-gold); }
+    .lb .lb-top .spacer { flex: 1; }
+    .lb .x, .lb .dl { display: inline-flex; align-items: center; gap: .45rem; color: var(--g-ink); text-decoration: none; font-size: .88rem; font-weight: 600; border: 1px solid var(--g-line); border-radius: 999px; padding: .5rem .9rem; background: rgba(6,5,14,.6); }
+    .lb .x:hover, .lb .dl:hover { border-color: rgba(232,180,90,.55); }
+    .lb .stage { position: relative; display: grid; place-items: center; min-height: 0; padding: 0 4rem; }
+    .lb .stage img { max-width: 100%; max-height: 100%; border-radius: 12px; box-shadow: 0 30px 80px rgba(0,0,0,.6); }
+    .lb .arrow { position: absolute; top: 50%; transform: translateY(-50%); display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 50%; border: 1px solid var(--g-line); background: rgba(6,5,14,.7); color: var(--g-ink); cursor: pointer; font-size: 1.2rem; }
+    .lb .arrow:hover { border-color: rgba(232,180,90,.6); }
+    .lb .arrow.prev { left: 1rem; } .lb .arrow.next { right: 1rem; }
+    .lb .lb-cap { text-align: center; padding: 1rem; color: var(--g-muted); font-size: .86rem; min-height: 3.2rem; }
+    .lb .lb-cap b { color: var(--g-ink); }
+    @media (max-width: 640px) { .lb .stage { padding: 0 .5rem; } .lb .arrow { width: 2.4rem; height: 2.4rem; } .lb .arrow.prev { left: .4rem; } .lb .arrow.next { right: .4rem; } }
+  </style>
+</head>
+<body>
+  <canvas id="starfield-canvas" aria-hidden="true"></canvas>
+
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="https://psychedelicsinrecovery.github.io/convention-astro/">
+        <img src="favicon.svg" alt="" width="34" height="34" />
+        <span>Gallery <small>PIR®</small></span>
+      </a>
+      <nav class="top-links" aria-label="Gallery navigation">
+        <a href="https://psychedelicsinrecovery.github.io/convention-astro/"><i class="ph-fill ph-confetti"></i> Convention</a>
+        <a href="https://www.psychedelicsinrecovery.org/convention-2026-schedule/" target="_blank" rel="noopener"><i class="ph-fill ph-list-checks"></i> Schedule</a>
+        <a href="https://service.psychedelicsinrecovery.org/convention-committee/" target="_blank" rel="noopener"><i class="ph-fill ph-hand-heart"></i> Committee</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <section class="hero">
+        <span class="kicker"><i class="ph-fill ph-image"></i> Kept on the fellowship's own ground</span>
+        <h1>The PIR® Convention Gallery</h1>
+        <p class="lede">
+          The photos of our gatherings — ours to keep. This gallery is served straight from the
+          fellowship's repository, so it lives as long as the fellowship does, loads fast anywhere in
+          the world, and costs nothing but care.
+        </p>
+        <div class="chips" id="chips" role="group" aria-label="Filter by album"></div>
+      </section>
+
+      <section id="albums" aria-live="polite"></section>
+
+      <section class="add-card">
+        <h2><i class="ph-fill ph-hand-heart"></i> Add your photos</h2>
+        <p>
+          Were you there? Add your photos to the shared Drive folder and they will be placed in the
+          album with care. If you would rather not appear in a photo, tell Anne R. and it comes down
+          immediately — the fellowship's consent comes first.
+        </p>
+        <div class="row">
+          <a class="btn primary" href="https://drive.google.com/drive/folders/1zUL1fHkDlWJLKrtHzfToceFoFl-PiTu?usp=sharing" target="_blank" rel="noopener"><i class="ph-fill ph-upload-simple"></i> Upload to the Drive folder</a>
+          <a class="btn" href="https://pir68.pixieset.com/psychedelicsinrecoverytminauguralconventiondenver2026/" target="_blank" rel="noopener"><i class="ph-fill ph-image"></i> Browse the Pixieset album</a>
+        </div>
+        <p class="consent">
+          Photos are shared with the fellowship's consent. To object to a photo being published,
+          contact Anne R. and it will be removed immediately.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div>The PIR® Convention Gallery · a keep-sake of <a href="https://psychedelicsinrecovery.github.io/convention-astro/">the PIR® Conventions</a>.</div>
+      <div class="tm">Psychedelics In Recovery™ – PIR® · <a href="https://www.psychedelicsinrecovery.org/">psychedelicsinrecovery.org</a> · served from <a href="https://github.com/psychedelicsinrecovery/gallery">GitHub</a></div>
+      <div>Photographs belong to the members who made them; shared here with the fellowship's consent.</div>
+    </div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <div class="lb-top">
+      <span class="count"><b id="lb-i">1</b> / <span id="lb-n">1</span></span>
+      <span class="spacer"></span>
+      <a class="dl" id="lb-dl" href="#" download target="_blank" rel="noopener"><i class="ph-fill ph-download-simple"></i> Download</a>
+      <button class="x" id="lb-x" aria-label="Close"><i class="ph-fill ph-x"></i> Close</button>
+    </div>
+    <div class="stage">
+      <button class="arrow prev" id="lb-prev" aria-label="Previous photo"><i class="ph-fill ph-caret-left"></i></button>
+      <img id="lb-img" alt="" />
+      <button class="arrow next" id="lb-next" aria-label="Next photo"><i class="ph-fill ph-caret-right"></i></button>
+    </div>
+    <div class="lb-cap" id="lb-cap"></div>
+  </div>
+
+  <script>
+    // The gallery reads photos.json — one file, edited by hand or built by tools/build_manifest.py.
+    fetch("photos.json")
+      .then((r) => { if (!r.ok) throw new Error("photos.json not found"); return r.json(); })
+      .then(render)
+      .catch(() => {
+        document.getElementById("albums").innerHTML =
+          '<div class="empty"><i class="ph-fill ph-camera"></i><h3>The album is still being gathered</h3>' +
+          '<p>photos.json could not be loaded yet. Once photos land in <code>assets/albums/</code> and the manifest is built, they will appear right here.</p>' +
+          '<a class="btn primary" href="https://pir68.pixieset.com/psychedelicsinrecoverytminauguralconventiondenver2026/" target="_blank" rel="noopener">Browse the Pixieset album meanwhile</a></div>';
+      });
+
+    let PHOTOS = [];  // flat list for the lightbox, in current filter order
+    let FILTER = "all";
+
+    function render(data) {
+      const albums = data.albums || [];
+      const chips = document.getElementById("chips");
+      const total = albums.reduce((n, a) => n + (a.photos || []).length, 0);
+      chips.innerHTML =
+        chip("all", "Everything", total) +
+        albums.map((a) => chip(a.id, a.title, (a.photos || []).length)).join("");
+      chips.addEventListener("click", (e) => {
+        const b = e.target.closest(".chip"); if (!b) return;
+        FILTER = b.dataset.album;
+        [...chips.children].forEach((c) => c.setAttribute("aria-pressed", String(c === b)));
+        paint(albums);
+      });
+      paint(albums);
+    }
+
+    function chip(id, label, n) {
+      return `<button class="chip" data-album="${id}" aria-pressed="${id === "all"}">${label} ${n ? `<span class="n">${n}</span>` : ""}</button>`;
+    }
+
+    function paint(albums) {
+      PHOTOS = [];
+      const root = document.getElementById("albums");
+      root.innerHTML = albums
+        .filter((a) => FILTER === "all" || a.id === FILTER)
+        .map((a) => {
+          const photos = (a.photos || []).filter((p) => !p.hidden);
+          const start = PHOTOS.length;
+          photos.forEach((p, i) => PHOTOS.push({ ...p, album: a.title, index: start + i }));
+          const ext =
+            a.pixieset
+              ? `<div class="ext"><a href="${a.pixieset}" target="_blank" rel="noopener"><i class="ph-fill ph-arrow-up-right"></i> The full album on Pixieset</a></div>`
+              : "";
+          const head =
+            `<div class="album-head"><h2>${a.title}</h2>` +
+            `<div class="meta">${a.when || ""}${a.place ? " · " + a.place : ""}${photos.length ? " · " + photos.length + " photos" : ""}</div>${ext}</div>`;
+          if (!photos.length)
+            return (
+              head +
+              '<div class="empty"><i class="ph-fill ph-camera"></i><h3>' +
+              (a.emptyTitle || "The album is being gathered") +
+              "</h3><p>" +
+              (a.emptyBody ||
+                "Photos land here as the fellowship shares them — upload yours with the link below.") +
+              '</p><a class="btn primary" href="https://drive.google.com/drive/folders/1zUL1fHkDlWJLKrtHzfToceFoFl-PiTu?usp=sharing" target="_blank" rel="noopener"><i class="ph-fill ph-upload-simple"></i> Add yours</a></div>'
+            );
+          const cells = photos
+            .map(
+              (p, i) =>
+                `<figure class="ph" data-i="${start + i}" tabindex="0" role="button" aria-label="Open photo: ${esc(p.caption || "Convention photo")}">` +
+                `<img loading="lazy" src="${esc(p.thumb || p.src)}" alt="${esc(p.caption || a.title + " photo")}" ${p.w ? `width="${p.w}" height="${p.h}"` : ""}/>` +
+                `${p.caption ? `<figcaption class="cap">${esc(p.caption)}${p.credit ? " · " + esc(p.credit) : ""}</figcaption>` : ""}</figure>`
+            )
+            .join("");
+          return head + `<div class="masonry">${cells}</div>`;
+        })
+        .join("");
+      root.querySelectorAll(".ph").forEach((el) => {
+        el.addEventListener("click", () => open(el.dataset.i));
+        el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") open(el.dataset.i); });
+      });
+    }
+
+    const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+    // ---- Lightbox ----
+    let CUR = 0;
+    const lb = document.getElementById("lb"), lbImg = document.getElementById("lb-img"),
+      lbCap = document.getElementById("lb-cap"), lbDl = document.getElementById("lb-dl");
+    function open(i) {
+      CUR = Math.max(0, Math.min(PHOTOS.length - 1, +i));
+      const p = PHOTOS[CUR];
+      lbImg.src = p.src; lbImg.alt = p.caption || "Convention photo";
+      lbCap.innerHTML = `${p.caption ? "<b>" + esc(p.caption) + "</b>" : "Photo"}${p.credit ? " · " + esc(p.credit) : ""}${p.date ? " · " + esc(p.date) : ""} · ${esc(p.album)}`;
+      lbDl.href = p.src;
+      document.getElementById("lb-i").textContent = CUR + 1;
+      document.getElementById("lb-n").textContent = PHOTOS.length;
+      lb.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+    function close() { lb.classList.remove("open"); document.body.style.overflow = ""; lbImg.src = ""; }
+    function step(d) { open((CUR + d + PHOTOS.length) % PHOTOS.length); }
+    document.getElementById("lb-x").addEventListener("click", close);
+    document.getElementById("lb-prev").addEventListener("click", () => step(-1));
+    document.getElementById("lb-next").addEventListener("click", () => step(1));
+    lb.addEventListener("click", (e) => { if (e.target === lb) close(); });
+    document.addEventListener("keydown", (e) => {
+      if (!lb.classList.contains("open")) return;
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowLeft") step(-1);
+      if (e.key === "ArrowRight") step(1);
+    });
+  </script>
+  <script src="https://psychedelicsinrecovery.github.io/starfield.js" defer></script>
+</body>
+</html>
