@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Add Your Photos · The PIR® Gallery · Psychedelics In Recovery™ – PIR®</title>
-  <meta name="description" content="How to add your photos to the PIR® Gallery — two paths: upload to the shared Drive folder, or walk the full process yourself." />
+  <meta name="description" content="How to add your photos to the PIR® Gallery — three paths: upload to the shared Drive folder, use GitHub in your browser, or walk the full process in your terminal." />
   <meta name="theme-color" content="#06050e" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -45,7 +45,7 @@
     a.inline { color: var(--gal-gold); text-decoration: none; }
     a.inline:hover { text-decoration: underline; }
 
-    .gal-paths { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 1rem; margin: 1.4rem 0; }
+    .gal-paths { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 1rem; margin: 1.4rem 0; }
     .gal-path { border: 1px solid var(--gal-line); border-radius: 18px; background: var(--gal-panel); padding: 1.3rem; }
     .gal-path i { font-size: 1.5rem; color: var(--gal-gold); }
     .gal-path h3 { font-family: var(--gal-serif); font-size: 1.1rem; margin: 0.6rem 0 0.4rem; color: var(--gal-ink); }
@@ -92,10 +92,8 @@
         <h1>Add your photos to the PIR® Gallery</h1>
         <p class="gal-lede">
           Thank you for sharing what you captured — photos are how the fellowship remembers its
-          gatherings. There are two paths: the <strong style="color: var(--gal-ink)">send-it-in path</strong> (two minutes, no
-          tools) and the <strong style="color: var(--gal-ink)">do-it-with-us path</strong> (you touch the repository yourself and
-          see your photos live in about a minute). Both end in the same place: your photos in the
-          fellowship's own gallery, kept on its own ground.
+          gatherings. Three paths, all ending in the same place: your photos in the fellowship's
+          own gallery, kept on its own ground. Pick whichever fits how you like to work.
         </p>
       </section>
 
@@ -107,6 +105,12 @@
           <p>Upload your photos to the shared Drive folder. A trusted servant will name them, caption them, and place them in the right album with care.</p>
           <a class="gal-btn primary" href="https://drive.google.com/drive/folders/1zUL1fHkDlWJLKrtHzfToceFoFl-PiTu?usp=sharing" target="_blank" rel="noopener"><i class="ph-fill ph-upload-simple"></i> Open the Drive folder</a>
         </div>
+        <div class="gal-path" id="web">
+          <i class="ph-fill ph-browser"></i>
+          <h3>The browser-only path</h3>
+          <p>No tools to install — GitHub's own website does everything: upload the photos, caption them, done. Works from any computer with a browser.</p>
+          <a class="gal-btn" href="#web-steps"><i class="ph-fill ph-arrow-down"></i> Walk the web path</a>
+        </div>
         <div class="gal-path">
           <i class="ph-fill ph-git-branch"></i>
           <h3>The do-it-with-us path</h3>
@@ -115,7 +119,51 @@
         </div>
       </div>
 
-      <h2 id="steps">The full walkthrough</h2>
+      <h2 id="web-steps">The browser-only path (no terminal, no installs)</h2>
+      <p class="gal-lede">This walks you through GitHub's own website — the same place the gallery lives. If you can attach a photo to an email, you can do this.</p>
+      <ol class="gal-steps">
+        <li>
+          <div>
+            <h3>Name your photos first, on your own computer</h3>
+            <p>Before uploading, rename each file so the order and captions come out right: <code>01-opening-ceremony.jpg</code>, <code>02-closing-circle.jpg</code>. Adding a credit in the name? Use <code>03-photo-by-maria-r.jpg</code> — the gallery will show "Maria R." (first name + last initial, the fellowship's tradition).</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Open the album folder on GitHub</h3>
+            <p>Go to <a class="inline" href="https://github.com/psychedelicsinrecovery/gallery" target="_blank" rel="noopener">github.com/psychedelicsinrecovery/gallery</a> and click through: <code>assets</code> → <code>albums</code> → <code>convention-2026</code>. A new gathering gets a new folder (step 3 shows how to make one).</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Upload your photos</h3>
+            <p>Click <strong>Add file</strong> → <strong>Upload files</strong>, then drag your renamed photos in (or click "choose your files"). Making a new album folder? Choose <strong>Add file</strong> → <strong>Create new file</strong> instead, and type the folder name with a trailing slash — like <code>assets/albums/retreat-2027/</code> — then upload your photos with <strong>Upload files</strong> from inside it.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Commit the photos</h3>
+            <p>Scroll down, give the change a friendly title like "Photos from the closing circle", and click <strong>Commit changes</strong>. That's the whole upload.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Add them to the album list</h3>
+            <p>Back on the code page, open <code>photos.json</code>, click the pencil icon to edit, and add one line for each photo inside the album's <code>"photos"</code> list:</p>
+            <pre>{ "src": "assets/albums/convention-2026/01-opening-ceremony.jpg",
+  "caption": "Opening ceremony" }</pre>
+            <p>Keep every photo's <code>src</code> exactly matching its filename. Want a credit that doesn't come from the filename? Add <code>"credit": "Maria R."</code>. When you're done, commit that too.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Watch it go live</h3>
+            <p>In about a minute, open <a class="inline" href="index.html">the gallery</a> — your photos are there, captioned and downloadable by the fellowship. If anything looks off, a trusted servant on the Tech Committee can tidy it up; nothing you do here can break anything.</p>
+          </div>
+        </li>
+      </ol>
+
+      <h2 id="steps">The full walkthrough (terminal)</h2>
       <ol class="gal-steps">
         <li>
           <div>
@@ -173,7 +221,7 @@ git push</pre>
           <li><b>Anonymity first.</b> Credits use first name + last initial ("Maria R."). If a photo identifies someone who'd rather not appear, it comes down.</li>
           <li><b>Consent is the tradition.</b> Every photo is shared with the fellowship's consent. To object to any photo, contact the gallery's trusted servants — removal is immediate and without question.</li>
           <li><b>Order matters.</b> The number prefix (<code>01-</code>, <code>02-</code>…) sets the order photos appear in.</li>
-          <li><b>No tools?</b> The send-it-in path exists exactly for this. Upload to the Drive folder and a trusted servant handles the rest.</li>
+          <li><b>No tools at all?</b> The send-it-in path exists exactly for this. Upload to the Drive folder and a trusted servant handles the rest.</li>
           <li><b>Big files are fine</b> — Pages serves them quickly worldwide. Very large sets may be resized by the trusted servants to keep the gallery quick.</li>
         </ul>
       </div>
@@ -192,17 +240,20 @@ git push</pre>
   </main>
 
   <footer>
-    <div class="gal-wrap" style="display:grid;gap:.4rem">
-      <div>The PIR® Gallery · a keep-sake of <a href="https://psychedelicsinrecovery.github.io/">the fellowship's GitHub home</a>.</div>
-      <div>Psychedelics In Recovery™ – PIR® · <a href="https://www.psychedelicsinrecovery.org/">psychedelicsinrecovery.org</a></div>
+    <div class="gal-wrap">
+      <arrival-footer></arrival-footer>
+      <div style="margin-top:1.2rem">
+        <div>The PIR® Gallery · a keep-sake of <a href="https://psychedelicsinrecovery.github.io/">the fellowship's GitHub home</a>.</div>
+        <div>Psychedelics In Recovery™ – PIR® · <a href="https://www.psychedelicsinrecovery.org/">psychedelicsinrecovery.org</a></div>
+      </div>
     </div>
   </footer>
 
   <!-- The kit override: this site's name and welcome, read by the kit before it runs. -->
-  <script is-inline="">
+  <script>
     window.ARRIVAL_SITE = {
       name: "the PIR® Gallery",
-      what: "This is the walkthrough for adding your photos to the fellowship's gallery. Two paths: send them in through the Drive folder, or follow the steps and see them live in about a minute.",
+      what: "This is the walkthrough for adding your photos to the fellowship's gallery. Three paths: send them in through the Drive folder, use GitHub in your browser, or follow the steps and see them live in about a minute.",
     };
   </script>
   <script src="https://psychedelicsinrecovery.github.io/starfield.js" defer></script>
