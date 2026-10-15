@@ -33,9 +33,6 @@
     .gal-wrap { max-width: 900px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); position: relative; z-index: 5; }
     header.top { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(12px); background: rgba(6, 5, 14, 0.55); border-bottom: 1px solid var(--gal-line); }
     header.top .wrap { display: flex; align-items: center; gap: 1rem; min-height: 64px; max-width: 1180px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
-    .brand { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--gal-ink); font-family: var(--gal-serif); font-weight: 700; font-size: 1.1rem; }
-    .brand img { border-radius: 9px; }
-    .brand small { font-family: var(--gal-sans); font-weight: 600; font-size: 0.72rem; color: var(--gal-gold); letter-spacing: 0.08em; margin-left: 0.4rem; }
     main { position: relative; z-index: 10; }
     .gal-hero { padding: clamp(2.4rem, 6vw, 4rem) 0 1.2rem; text-align: center; }
     .gal-hero .gal-kicker { margin-inline: auto; }
@@ -52,6 +49,7 @@
     .gal-path i { font-size: 1.5rem; color: var(--gal-gold); }
     .gal-path h3 { font-family: var(--gal-serif); font-size: 1.1rem; margin: 0.6rem 0 0.4rem; color: var(--gal-ink); }
     .gal-path p { margin: 0 0 0.8rem; font-size: 0.89rem; color: var(--gal-muted); line-height: 1.55; }
+    .gal-path .row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
     .gal-btn { display: inline-flex; align-items: center; gap: 0.55rem; font-weight: 700; font-size: 0.92rem; padding: 0.65rem 1.25rem; border-radius: 999px; text-decoration: none; border: 1px solid var(--gal-line); color: var(--gal-ink); background: var(--gal-panel); transition: transform 0.15s, border-color 0.15s; }
     .gal-btn:hover { transform: translateY(-2px); border-color: rgba(232, 180, 90, 0.55); }
     .gal-btn.primary { background: linear-gradient(120deg, var(--gal-violet), var(--gal-gold)); color: #17120a; border-color: transparent; }
@@ -78,18 +76,49 @@
     .cat-mark { width: 0.85rem; height: 0.85rem; border-radius: 50%; background: conic-gradient(from 180deg, #e8b45a, #a78bfa, #e8b45a); }
     @media (max-width: 860px) { .pir-foot { grid-template-columns: 1fr; } }
     @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+    /* Header dropdown + CTA + brand parity */
+    .brand { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--gal-ink); font-family: var(--gal-serif); font-weight: 700; font-size: 1.1rem; }
+    .brand img { border-radius: 9px; }
+    .brand small { font-family: var(--gal-sans); font-weight: 600; font-size: 0.72rem; color: var(--gal-gold); letter-spacing: 0.08em; margin-left: 0.4rem; }
+    .brand-drop { position: relative; }
+    .brand-drop summary { list-style: none; cursor: pointer; }
+    .brand-drop summary::-webkit-details-marker { display: none; }
+    .brand-drop summary .ph-caret-down { font-size: 0.8rem; color: var(--gal-gold); transition: transform 0.15s ease; }
+    .brand-drop[open] summary .ph-caret-down { transform: rotate(180deg); }
+    .brand-menu { position: absolute; top: calc(100% + 0.6rem); left: 0; z-index: 60; min-width: 300px; display: grid; gap: 0.15rem; padding: 0.6rem; border: 1px solid var(--gal-line); border-radius: 14px; background: rgba(11, 9, 24, 0.97); backdrop-filter: blur(12px); box-shadow: 0 18px 50px rgba(0,0,0,0.5); }
+    .brand-menu a { display: flex; align-items: center; gap: 0.6rem; padding: 0.55rem 0.7rem; border-radius: 9px; color: var(--gal-ink); text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+    .brand-menu a:hover { background: rgba(255, 255, 255, 0.06); color: var(--gal-gold); }
+    .brand-menu a i { color: var(--gal-gold); font-size: 1rem; }
+    .head-cta { margin-left: auto; font-size: 0.85rem; padding: 0.5rem 1rem; }
+    @media (max-width: 860px) { .head-cta { display: none; } }
+    /* Scroll progress line */
+    .gal-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; z-index: 100; background: linear-gradient(90deg, #e8b45a, #a78bfa); }
   </style>
 </head>
 <body>
+  <div class="gal-progress" aria-hidden="true"></div>
   <canvas id="starfield-canvas" aria-hidden="true"></canvas>
   <header class="top">
     <div class="wrap">
-      <a class="brand" href="index.html">
-        <img src="favicon.svg" alt="" width="34" height="34" />
-        <span class="arr-brand-text">Gallery <small>PIR®</small></span>
-      </a>
+      <details class="brand-drop">
+        <summary class="brand">
+          <img src="favicon.svg" alt="" width="34" height="34" />
+          <span class="arr-brand-text">Gallery <small>PIR®</small></span>
+          <i class="ph-fill ph-caret-down" aria-hidden="true"></i>
+        </summary>
+        <div class="brand-menu">
+          <a href="index.html"><i class="ph-fill ph-images"></i> The albums</a>
+          <a href="walkthrough.html"><i class="ph-fill ph-map-trifold"></i> Add your photos — the walkthrough</a>
+          <a href="https://pir68.pixieset.com/psychedelicsinrecoverytminauguralconventiondenver2026/" target="_blank" rel="noopener"><i class="ph-fill ph-image"></i> The Pixieset album (temporary)</a>
+          <a href="https://psychedelicsinrecovery.github.io/convention-astro/gallery/"><i class="ph-fill ph-confetti"></i> The Convention gallery</a>
+          <a href="https://psychedelicsinrecovery.github.io/convention-astro/"><i class="ph-fill ph-confetti"></i> The Convention site</a>
+          <a href="https://drive.google.com/drive/folders/1zUL1fHkDIWJLKrtHzfFToceFoFl-PiTu?usp=sharing" target="_blank" rel="noopener"><i class="ph-fill ph-folder-open"></i> The shared Drive folder</a>
+        </div>
+      </details>
       <arrival-nav></arrival-nav>
       <arrival-controls></arrival-controls>
+      <a class="gal-btn head-cta" href="index.html"><i class="ph-fill ph-images"></i> See the albums</a>
     </div>
   </header>
 
@@ -111,7 +140,10 @@
           <i class="ph-fill ph-paper-plane-tilt"></i>
           <h3>The send-it-in path</h3>
           <p>Send your photos to a trusted servant — through PIR's contact page, or the committee channels you already know. A trusted servant will name them, caption them, and place them in the right album with care.</p>
-          <a class="gal-btn primary" href="https://www.psychedelicsinrecovery.org/contact/" target="_blank" rel="noopener"><i class="ph-fill ph-hand-heart"></i> Reach out to a trusted servant</a>
+          <div class="row">
+            <button class="gal-btn primary" type="button" data-arrival-open="contact"><i class="ph-fill ph-hand-heart"></i> Reach out to a trusted servant</button>
+            <a class="gal-btn" href="https://drive.google.com/drive/folders/1zUL1fHkDIWJLKrtHzfFToceFoFl-PiTu?usp=sharing" target="_blank" rel="noopener"><i class="ph-fill ph-upload-simple"></i> Upload to the Drive folder</a>
+          </div>
         </div>
         <div class="gal-path" id="web">
           <i class="ph-fill ph-browser"></i>
@@ -176,7 +208,7 @@
         <li>
           <div>
             <h3>Gather your photos</h3>
-            <p>Collect the photos you'd like to share — from your phone or camera. Pick the keepers: the gallery favors moments over quantity.</p>
+            <p>Collect the photos you'd like to share — from your phone, camera, or the shared Drive folder. Pick the keepers: the gallery favors moments over quantity.</p>
           </div>
         </li>
         <li>
@@ -268,6 +300,13 @@ git push</pre>
       what: "This is the walkthrough for adding your photos to the fellowship's gallery. Three paths: send them to a trusted servant, use GitHub in your browser, or follow the steps and see them live in about a minute.",
     };
   </script>
+  <script>
+    addEventListener("scroll", function () {
+      var d = document.documentElement, p = document.querySelector(".gal-progress");
+      if (p) p.style.width = Math.round((d.scrollTop / Math.max(1, d.scrollHeight - d.clientHeight)) * 100) + "%";
+    }, { passive: true });
+  </script>
+  <script src="https://psychedelicsinrecovery.github.io/arrival/arrival.js" defer></script>
   <script src="https://psychedelicsinrecovery.github.io/starfield.js" defer></script>
 </body>
 </html>
