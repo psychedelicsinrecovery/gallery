@@ -1,15 +1,15 @@
 <!doctype html>
-<html lang="en" data-arrival-site="convention" data-arrival-splash="off">
+<html lang="en" data-arrival-site="gallery" data-arrival-splash="off">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>The PIR® Convention Gallery · Psychedelics In Recovery™ – PIR®</title>
-  <meta name="description" content="The fellowship's own photo gallery — the gatherings of Psychedelics In Recovery™ – PIR®, kept on the fellowship's own ground." />
+  <title>The PIR® Gallery · Psychedelics In Recovery™ – PIR®</title>
+  <meta name="description" content="The fellowship's own gallery — photo albums of Psychedelics In Recovery™ – PIR®, kept on the fellowship's own ground. Browse, remember, and add your own photos." />
   <meta name="theme-color" content="#06050e" />
-  <meta property="og:site_name" content="PIR® Convention Gallery" />
+  <meta property="og:site_name" content="PIR® Gallery" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="The PIR® Convention Gallery" />
-  <meta property="og:description" content="The fellowship's shared photos from its gatherings — browsable, downloadable, kept on GitHub." />
+  <meta property="og:title" content="The PIR® Gallery" />
+  <meta property="og:description" content="The fellowship's photo albums — browsable, downloadable, kept on GitHub. Born from a WhatsApp request that went wonderfully rogue." />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="https://psychedelicsinrecovery.github.io/arrival/org.css" />
   <link rel="stylesheet" href="https://psychedelicsinrecovery.github.io/alex-desk-public/assets/alex.css" />
   <style>
-    /* The gallery's own layer, in the fellowship's voice. Tokens fall back if the kit is away. */
+    /* The Gallery's own layer, in the fellowship's voice. Tokens fall back if the kit is away. */
     :root {
       --g-ink: var(--ink, #f3eee4);
       --g-muted: var(--muted, rgba(243,238,228,.62));
@@ -33,10 +33,7 @@
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body {
-      margin: 0; min-height: 100vh; color: var(--g-ink);
-      background: #06050e; font-family: var(--g-sans); -webkit-font-smoothing: antialiased;
-    }
+    body { margin: 0; min-height: 100vh; color: var(--g-ink); background: #06050e; font-family: var(--g-sans); -webkit-font-smoothing: antialiased; }
     #starfield-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
     .wrap { max-width: 1180px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); position: relative; z-index: 5; }
     header.top { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(12px); background: rgba(6,5,14,.55); border-bottom: 1px solid var(--g-line); }
@@ -48,26 +45,37 @@
     .top-links a { display: inline-flex; align-items: center; gap: .45rem; color: var(--g-muted); text-decoration: none; font-size: .88rem; font-weight: 600; padding: .45rem .8rem; border-radius: 999px; }
     .top-links a:hover { color: var(--g-ink); background: var(--g-panel); }
 
-    .hero { padding: clamp(2.6rem, 7vw, 5rem) 0 1.6rem; }
+    .hero { padding: clamp(2.6rem, 7vw, 5rem) 0 1.4rem; position: relative; }
+    .hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 50% at 70% 0%, rgba(167,139,250,.14), transparent 70%), radial-gradient(40% 40% at 15% 10%, rgba(232,180,90,.1), transparent 70%); pointer-events: none; }
     .kicker { display: inline-flex; align-items: center; gap: .5rem; font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--g-gold); border: 1px solid rgba(232,180,90,.35); border-radius: 999px; padding: .35rem .9rem; background: rgba(232,180,90,.08); }
     h1 { font-family: var(--g-serif); font-size: clamp(2.2rem, 5.5vw, 3.8rem); line-height: 1.05; letter-spacing: -.02em; margin: 1rem 0 .7rem; }
     .lede { font-size: clamp(1rem, 1.5vw, 1.18rem); color: var(--g-muted); max-width: 62ch; line-height: 1.6; }
-    .lede a { color: var(--g-gold); text-decoration: none; }
-    .lede a:hover { text-decoration: underline; }
+    .lede a, .band a.inline { color: var(--g-gold); text-decoration: none; }
+    .lede a:hover, .band a.inline:hover { text-decoration: underline; }
 
-    .chips { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.4rem 0 2rem; }
-    .chip { display: inline-flex; align-items: center; gap: .45rem; font-family: var(--g-sans); font-size: .86rem; font-weight: 600; color: var(--g-muted); border: 1px solid var(--g-line); background: var(--g-panel); border-radius: 999px; padding: .45rem 1rem; cursor: pointer; transition: all .15s; }
-    .chip:hover { color: var(--g-ink); border-color: rgba(232,180,90,.5); }
-    .chip[aria-pressed="true"] { color: #17120a; background: linear-gradient(120deg, var(--g-violet), var(--g-gold)); border-color: transparent; }
-    .chip .n { font-size: .74rem; opacity: .8; }
+    /* Album spot cards — the entry-portal card language */
+    .spots { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 1rem; margin: 1.8rem 0 1rem; }
+    .spot { position: relative; display: flex; flex-direction: column; gap: .5rem; border: 1px solid var(--g-line); border-radius: 18px; background: var(--g-panel); padding: 1.3rem; text-decoration: none; color: var(--g-ink); transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease; }
+    .spot:hover { transform: translateY(-3px); border-color: rgba(232,180,90,.55); box-shadow: 0 12px 40px rgba(0,0,0,.35); }
+    .spot .s-icon { font-size: 1.5rem; color: var(--g-gold); }
+    .spot h3 { font-family: var(--g-serif); font-size: 1.15rem; margin: 0; }
+    .spot .s-meta { font-size: .83rem; color: var(--g-muted); }
+    .spot .s-links { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .5rem; }
+    .spot .s-links a { display: inline-flex; align-items: center; gap: .4rem; font-size: .8rem; font-weight: 600; color: var(--g-ink); text-decoration: none; border: 1px solid var(--g-line); border-radius: 999px; padding: .32rem .75rem; }
+    .spot .s-links a:hover { border-color: rgba(232,180,90,.55); }
+    .spot.featured { border-color: color-mix(in srgb, var(--g-violet) 55%, transparent); background: linear-gradient(140deg, rgba(167,139,250,.10), rgba(232,180,90,.06)); }
+    .spot.featured::after { content: "The one that started it all"; position: absolute; top: -.85rem; left: 1.1rem; font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #17120a; background: linear-gradient(120deg, var(--g-violet), var(--g-gold)); border-radius: 999px; padding: .22rem .7rem; }
 
-    .album-head { margin: 2.2rem 0 1rem; }
+    /* Origin story band */
+    .story { margin: 2.2rem 0; border: 1px solid var(--g-line); border-radius: 22px; background: linear-gradient(120deg, rgba(167,139,250,.09), rgba(232,180,90,.07)); padding: 1.7rem; }
+    .story h2 { font-family: var(--g-serif); margin: 0 0 .5rem; font-size: 1.5rem; }
+    .story p { margin: .5rem 0; color: var(--g-muted); font-size: .93rem; line-height: 1.6; max-width: 75ch; }
+    .story .row { display: flex; gap: .7rem; flex-wrap: wrap; margin-top: .8rem; }
+
+    /* Album sections + masonry */
+    .album-head { margin: 2.6rem 0 1rem; scroll-margin-top: 90px; }
     .album-head h2 { font-family: var(--g-serif); font-size: 1.6rem; margin: 0 0 .2rem; }
     .album-head .meta { font-size: .85rem; color: var(--g-muted); }
-    .album-head .ext { display: inline-flex; gap: .6rem; margin-top: .6rem; flex-wrap: wrap; }
-    .album-head .ext a { display: inline-flex; align-items: center; gap: .4rem; font-size: .84rem; font-weight: 600; color: var(--g-ink); text-decoration: none; border: 1px solid var(--g-line); border-radius: 999px; padding: .4rem .85rem; }
-    .album-head .ext a:hover { border-color: rgba(232,180,90,.55); }
-
     .masonry { columns: 4 240px; column-gap: 12px; }
     @media (max-width: 900px) { .masonry { columns: 3 200px; } }
     @media (max-width: 620px) { .masonry { columns: 2 160px; } }
@@ -77,16 +85,23 @@
     .ph .cap { position: absolute; inset: auto 0 0 0; padding: .55rem .7rem; font-size: .78rem; line-height: 1.4; color: var(--g-ink); background: linear-gradient(transparent, rgba(6,5,14,.88)); opacity: 0; transition: opacity .18s; }
     .ph:hover .cap, .ph:focus .cap { opacity: 1; }
 
-    .empty { border: 1px dashed var(--g-line); border-radius: 18px; padding: 2.4rem 1.6rem; text-align: center; color: var(--g-muted); }
+    .empty { border: 1px dashed var(--g-line); border-radius: 18px; padding: 2.2rem 1.6rem; text-align: center; color: var(--g-muted); }
     .empty i { font-size: 2rem; color: var(--g-gold); }
     .empty h3 { font-family: var(--g-serif); color: var(--g-ink); margin: .6rem 0 .3rem; font-size: 1.2rem; }
     .empty p { font-size: .9rem; max-width: 52ch; margin: 0 auto 1rem; line-height: 1.55; }
 
-    .btn { display: inline-flex; align-items: center; gap: .55rem; font-family: var(--g-sans); font-weight: 700; font-size: .95rem; padding: .72rem 1.35rem; border-radius: 999px; text-decoration: none; border: 1px solid var(--g-line); color: var(--g-ink); background: var(--g-panel); transition: transform .15s, border-color .15s; }
+    .btn { display: inline-flex; align-items: center; gap: .55rem; font-family: var(--g-sans); font-weight: 700; font-size: .95rem; padding: .72rem 1.35rem; border-radius: 999px; text-decoration: none; border: 1px solid var(--g-line); color: var(--g-ink); background: var(--g-panel); transition: transform .15s, border-color .15s; cursor: pointer; }
     .btn:hover { transform: translateY(-2px); border-color: rgba(232,180,90,.55); }
     .btn.primary { background: linear-gradient(120deg, var(--g-violet), var(--g-gold)); color: #17120a; border-color: transparent; }
 
-    .add-card { margin: 2.5rem 0; border: 1px solid var(--g-line); border-radius: 22px; background: linear-gradient(120deg, rgba(167,139,250,.09), rgba(232,180,90,.07)); padding: 1.8rem; display: grid; gap: .8rem; }
+    /* Walkthrough band */
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 1rem; margin: 1.2rem 0; }
+    .step { border: 1px solid var(--g-line); border-radius: 18px; background: var(--g-panel); padding: 1.1rem 1.2rem; }
+    .step .n { font-family: var(--g-serif); font-size: 1.6rem; color: var(--g-gold); }
+    .step h3 { font-family: var(--g-serif); font-size: 1.05rem; margin: .3rem 0 .3rem; }
+    .step p { margin: 0; font-size: .87rem; color: var(--g-muted); line-height: 1.55; }
+
+    .add-card { margin: 2.5rem 0; border: 1px solid var(--g-line); border-radius: 22px; background: var(--g-panel); padding: 1.8rem; display: grid; gap: .8rem; }
     .add-card h2 { font-family: var(--g-serif); margin: 0; font-size: 1.5rem; }
     .add-card p { margin: 0; color: var(--g-muted); font-size: .92rem; line-height: 1.55; }
     .add-card .row { display: flex; gap: .8rem; flex-wrap: wrap; margin-top: .4rem; }
@@ -95,7 +110,6 @@
     footer { position: relative; z-index: 5; border-top: 1px solid var(--g-line); margin-top: 3rem; padding: 2.2rem 0 2.6rem; color: var(--g-muted); font-size: .84rem; line-height: 1.7; }
     footer a { color: var(--g-gold); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
-    .tm { font-family: var(--g-sans); font-size: .78rem; opacity: .8; }
 
     /* Lightbox */
     .lb { position: fixed; inset: 0; z-index: 90; display: none; background: rgba(4,3,10,.92); backdrop-filter: blur(8px); }
@@ -114,6 +128,7 @@
     .lb .lb-cap { text-align: center; padding: 1rem; color: var(--g-muted); font-size: .86rem; min-height: 3.2rem; }
     .lb .lb-cap b { color: var(--g-ink); }
     @media (max-width: 640px) { .lb .stage { padding: 0 .5rem; } .lb .arrow { width: 2.4rem; height: 2.4rem; } .lb .arrow.prev { left: .4rem; } .lb .arrow.next { right: .4rem; } }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
   </style>
 </head>
 <body>
@@ -121,14 +136,15 @@
 
   <header class="top">
     <div class="wrap">
-      <a class="brand" href="https://psychedelicsinrecovery.github.io/convention-astro/">
+      <a class="brand" href="https://psychedelicsinrecovery.github.io/">
         <img src="favicon.svg" alt="" width="34" height="34" />
         <span>Gallery <small>PIR®</small></span>
       </a>
       <nav class="top-links" aria-label="Gallery navigation">
+        <a href="#albums"><i class="ph-fill ph-images"></i> Albums</a>
+        <a href="walkthrough.html"><i class="ph-fill ph-hand-heart"></i> Add your photos</a>
         <a href="https://psychedelicsinrecovery.github.io/convention-astro/"><i class="ph-fill ph-confetti"></i> Convention</a>
-        <a href="https://www.psychedelicsinrecovery.org/convention-2026-schedule/" target="_blank" rel="noopener"><i class="ph-fill ph-list-checks"></i> Schedule</a>
-        <a href="https://service.psychedelicsinrecovery.org/convention-committee/" target="_blank" rel="noopener"><i class="ph-fill ph-hand-heart"></i> Committee</a>
+        <a href="https://www.psychedelicsinrecovery.org/" target="_blank" rel="noopener"><i class="ph-fill ph-globe"></i> Main site</a>
       </nav>
     </div>
   </header>
@@ -136,32 +152,54 @@
   <main>
     <div class="wrap">
       <section class="hero">
-        <span class="kicker"><i class="ph-fill ph-image"></i> Kept on the fellowship's own ground</span>
-        <h1>The PIR® Convention Gallery</h1>
+        <span class="kicker"><i class="ph-fill ph-images"></i> Kept on the fellowship's own ground</span>
+        <h1>The PIR® Gallery</h1>
         <p class="lede">
-          The photos of our gatherings — ours to keep. This gallery is served straight from the
-          fellowship's repository, so it lives as long as the fellowship does, loads fast anywhere in
-          the world, and costs nothing but care.
+          The photo albums of <strong style="color:var(--g-ink)">Psychedelics In Recovery™ – PIR®</strong> — not tied to any one event. Conventions,
+          gatherings, service years, whatever the fellowship makes next: every album lives here,
+          served straight from the fellowship's repository, fast anywhere in the world, and costing
+          nothing but care. Born from a WhatsApp request that went wonderfully rogue.
         </p>
-        <div class="chips" id="chips" role="group" aria-label="Filter by album"></div>
       </section>
 
-      <section id="albums" aria-live="polite"></section>
+      <section class="story">
+        <h2><i class="ph-fill ph-sparkle"></i> How this gallery began</h2>
+        <p>
+          It started with a simple favor: getting <strong style="color:var(--g-ink)">Anne R.'s</strong> Pixieset album onto
+          <em>gallery.psychedelicsinrecovery.org</em> for the Inaugural Convention photos. One WhatsApp thread later, the
+          fellowship had a shared Google Drive gathering everyone's photos from Denver — and a
+          decision: the photos of our recovery deserve a home we own. So the fellowship built this
+          gallery on GitHub: no platform, no expiry, no cost — the Pixieset album and Drive folder
+          that sparked it are woven right in below.
+        </p>
+        <div class="row">
+          <a class="btn primary" href="https://pir68.pixieset.com/psychedelicsinrecoverytminauguralconventiondenver2026/" target="_blank" rel="noopener"><i class="ph-fill ph-image"></i> The Pixieset album that started it</a>
+          <a class="btn" href="https://drive.google.com/drive/folders/1zUL1fHkDlWJLKrtHzfToceFoFl-PiTu?usp=sharing" target="_blank" rel="noopener"><i class="ph-fill ph-upload-simple"></i> The Drive folder gathering photos</a>
+          <a class="btn" href="https://psychedelicsinrecovery.github.io/convention-astro/"><i class="ph-fill ph-confetti"></i> The Convention it honors</a>
+        </div>
+      </section>
+
+      <section id="albums" aria-live="polite">
+        <div class="album-head" style="margin-top:1rem"><h2>The albums</h2><div class="meta">Every album is a folder in the repository and a card below. Featured albums glow a little brighter.</div></div>
+        <div class="spots" id="spots"></div>
+        <div id="sections"></div>
+      </section>
 
       <section class="add-card">
         <h2><i class="ph-fill ph-hand-heart"></i> Add your photos</h2>
         <p>
-          Were you there? Add your photos to the shared Drive folder and they will be placed in the
-          album with care. If you would rather not appear in a photo, tell Anne R. and it comes down
-          immediately — the fellowship's consent comes first.
+          Were you there? Two paths, both easy: upload straight to the shared Drive folder, or walk
+          the full process yourself — naming, captions, credits and all — in the walkthrough. If you
+          would rather not appear in a photo, tell a trusted servant and it comes down immediately:
+          the fellowship's consent comes first.
         </p>
         <div class="row">
-          <a class="btn primary" href="https://drive.google.com/drive/folders/1zUL1fHkDlWJLKrtHzfToceFoFl-PiTu?usp=sharing" target="_blank" rel="noopener"><i class="ph-fill ph-upload-simple"></i> Upload to the Drive folder</a>
-          <a class="btn" href="https://pir68.pixieset.com/psychedelicsinrecoverytminauguralconventiondenver2026/" target="_blank" rel="noopener"><i class="ph-fill ph-image"></i> Browse the Pixieset album</a>
+          <a class="btn primary" href="walkthrough.html"><i class="ph-fill ph-map-trifold"></i> Walk through the process</a>
+          <a class="btn" href="https://drive.google.com/drive/folders/1zUL1fHkDlWJLKrtHzfToceFoFl-PiTu?usp=sharing" target="_blank" rel="noopener"><i class="ph-fill ph-upload-simple"></i> Upload to the Drive folder</a>
         </div>
         <p class="consent">
           Photos are shared with the fellowship's consent. To object to a photo being published,
-          contact Anne R. and it will be removed immediately.
+          contact the gallery's trusted servants and it will be removed immediately.
         </p>
       </section>
     </div>
@@ -169,8 +207,8 @@
 
   <footer>
     <div class="wrap">
-      <div>The PIR® Convention Gallery · a keep-sake of <a href="https://psychedelicsinrecovery.github.io/convention-astro/">the PIR® Conventions</a>.</div>
-      <div class="tm">Psychedelics In Recovery™ – PIR® · <a href="https://www.psychedelicsinrecovery.org/">psychedelicsinrecovery.org</a> · served from <a href="https://github.com/psychedelicsinrecovery/gallery">GitHub</a></div>
+      <div>The PIR® Gallery · part of <a href="https://psychedelicsinrecovery.github.io/">the fellowship's GitHub home</a>.</div>
+      <div>Psychedelics In Recovery™ – PIR® · <a href="https://www.psychedelicsinrecovery.org/">psychedelicsinrecovery.org</a> · served from <a href="https://github.com/psychedelicsinrecovery/gallery">GitHub</a></div>
       <div>Photographs belong to the members who made them; shared here with the fellowship's consent.</div>
     </div>
   </footer>
@@ -192,84 +230,71 @@
   </div>
 
   <script>
-    // The gallery reads photos.json — one file, edited by hand or built by tools/build_manifest.py.
+    // The gallery reads photos.json — one file, built by tools/build_manifest.py.
+    // Albums with "featured": true get the glowing spot card and, if they carry an "astro" link,
+    // a bridge to their Astro site (the Convention's home).
     fetch("photos.json")
       .then((r) => { if (!r.ok) throw new Error("photos.json not found"); return r.json(); })
       .then(render)
       .catch(() => {
-        document.getElementById("albums").innerHTML =
-          '<div class="empty"><i class="ph-fill ph-camera"></i><h3>The album is still being gathered</h3>' +
+        document.getElementById("sections").innerHTML =
+          '<div class="empty"><i class="ph-fill ph-camera"></i><h3>The albums are still being gathered</h3>' +
           '<p>photos.json could not be loaded yet. Once photos land in <code>assets/albums/</code> and the manifest is built, they will appear right here.</p>' +
-          '<a class="btn primary" href="https://pir68.pixieset.com/psychedelicsinrecoverytminauguralconventiondenver2026/" target="_blank" rel="noopener">Browse the Pixieset album meanwhile</a></div>';
+          '<a class="btn primary" href="walkthrough.html">Walk through the process</a></div>';
       });
 
-    let PHOTOS = [];  // flat list for the lightbox, in current filter order
-    let FILTER = "all";
+    let PHOTOS = [];
+
+    function esc(s) { return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
 
     function render(data) {
-      const albums = data.albums || [];
-      const chips = document.getElementById("chips");
-      const total = albums.reduce((n, a) => n + (a.photos || []).length, 0);
-      chips.innerHTML =
-        chip("all", "Everything", total) +
-        albums.map((a) => chip(a.id, a.title, (a.photos || []).length)).join("");
-      chips.addEventListener("click", (e) => {
-        const b = e.target.closest(".chip"); if (!b) return;
-        FILTER = b.dataset.album;
-        [...chips.children].forEach((c) => c.setAttribute("aria-pressed", String(c === b)));
-        paint(albums);
-      });
-      paint(albums);
-    }
+      const albums = (data.albums || []).filter((a) => !a.hidden);
+      const spots = document.getElementById("spots");
+      const sections = document.getElementById("sections");
+      spots.innerHTML = albums.map((a) => {
+        const n = (a.photos || []).length;
+        const links = [
+          `<a href="#album-${esc(a.id)}"><i class="ph-fill ${n ? "ph-images" : "ph-hourglass"}"></i> ${n ? "Browse below" : "Coming soon"}</a>`,
+        ];
+        if (a.pixieset) links.push(`<a href="${esc(a.pixieset)}" target="_blank" rel="noopener"><i class="ph-fill ph-arrow-up-right"></i> Pixieset</a>`);
+        if (a.astro) links.push(`<a href="${esc(a.astro)}"><i class="ph-fill ph-confetti"></i> Its Astro site</a>`);
+        return (
+          `<a class="spot ${a.featured ? "featured" : ""}" id="spot-${esc(a.id)}" href="#album-${esc(a.id)}">` +
+          `<span class="s-icon"><i class="ph-fill ${a.icon || "ph-images"}"></i></span>` +
+          `<h3>${esc(a.title)}</h3>` +
+          `<span class="s-meta">${esc(a.when || "")}${a.place ? " · " + esc(a.place) : ""}${n ? " · " + n + " photo" + (n === 1 ? "" : "s") : " · gathering now"}</span>` +
+          `<span class="s-links">${links.join("")}</span></a>`
+        );
+      }).join("");
 
-    function chip(id, label, n) {
-      return `<button class="chip" data-album="${id}" aria-pressed="${id === "all"}">${label} ${n ? `<span class="n">${n}</span>` : ""}</button>`;
-    }
-
-    function paint(albums) {
       PHOTOS = [];
-      const root = document.getElementById("albums");
-      root.innerHTML = albums
-        .filter((a) => FILTER === "all" || a.id === FILTER)
-        .map((a) => {
-          const photos = (a.photos || []).filter((p) => !p.hidden);
-          const start = PHOTOS.length;
-          photos.forEach((p, i) => PHOTOS.push({ ...p, album: a.title, index: start + i }));
-          const ext =
-            a.pixieset
-              ? `<div class="ext"><a href="${a.pixieset}" target="_blank" rel="noopener"><i class="ph-fill ph-arrow-up-right"></i> The full album on Pixieset</a></div>`
-              : "";
-          const head =
-            `<div class="album-head"><h2>${a.title}</h2>` +
-            `<div class="meta">${a.when || ""}${a.place ? " · " + a.place : ""}${photos.length ? " · " + photos.length + " photos" : ""}</div>${ext}</div>`;
-          if (!photos.length)
-            return (
-              head +
-              '<div class="empty"><i class="ph-fill ph-camera"></i><h3>' +
-              (a.emptyTitle || "The album is being gathered") +
-              "</h3><p>" +
-              (a.emptyBody ||
-                "Photos land here as the fellowship shares them — upload yours with the link below.") +
-              '</p><a class="btn primary" href="https://drive.google.com/drive/folders/1zUL1fHkDlWJLKrtHzfToceFoFl-PiTu?usp=sharing" target="_blank" rel="noopener"><i class="ph-fill ph-upload-simple"></i> Add yours</a></div>'
-            );
-          const cells = photos
-            .map(
-              (p, i) =>
-                `<figure class="ph" data-i="${start + i}" tabindex="0" role="button" aria-label="Open photo: ${esc(p.caption || "Convention photo")}">` +
-                `<img loading="lazy" src="${esc(p.thumb || p.src)}" alt="${esc(p.caption || a.title + " photo")}" ${p.w ? `width="${p.w}" height="${p.h}"` : ""}/>` +
-                `${p.caption ? `<figcaption class="cap">${esc(p.caption)}${p.credit ? " · " + esc(p.credit) : ""}</figcaption>` : ""}</figure>`
-            )
-            .join("");
-          return head + `<div class="masonry">${cells}</div>`;
-        })
-        .join("");
-      root.querySelectorAll(".ph").forEach((el) => {
+      sections.innerHTML = albums.map((a) => {
+        const photos = (a.photos || []).filter((p) => !p.hidden);
+        const start = PHOTOS.length;
+        photos.forEach((p, i) => PHOTOS.push({ ...p, album: a.title, index: start + i }));
+        const head =
+          `<div class="album-head" id="album-${esc(a.id)}"><h2>${esc(a.title)}</h2>` +
+          `<div class="meta">${esc(a.when || "")}${a.place ? " · " + esc(a.place) : ""}${photos.length ? " · " + photos.length + " photos" : ""}</div>` +
+          (a.astro ? `<div class="meta"><a class="inline" href="${esc(a.astro)}">Read the story of this gathering on its Astro site →</a></div>` : "") +
+          `</div>`;
+        if (!photos.length)
+          return head +
+            '<div class="empty"><i class="ph-fill ph-camera"></i><h3>' + esc(a.emptyTitle || "The album is being gathered") + "</h3><p>" +
+            esc(a.emptyBody || "Photos land here as the fellowship shares them — add yours with the links above.") +
+            '</p><a class="btn primary" href="walkthrough.html"><i class="ph-fill ph-map-trifold"></i> How to add yours</a></div>';
+        const cells = photos.map((p, i) =>
+          `<figure class="ph" data-i="${start + i}" tabindex="0" role="button" aria-label="Open photo: ${esc(p.caption || "fellowship photo")}">` +
+          `<img loading="lazy" src="${esc(p.thumb || p.src)}" alt="${esc(p.caption || a.title + " photo")}" ${p.w ? `width="${p.w}" height="${p.h}"` : ""}/>` +
+          `${p.caption ? `<figcaption class="cap">${esc(p.caption)}${p.credit ? " · " + esc(p.credit) : ""}</figcaption>` : ""}</figure>`
+        ).join("");
+        return head + `<div class="masonry">${cells}</div>`;
+      }).join("");
+
+      sections.querySelectorAll(".ph").forEach((el) => {
         el.addEventListener("click", () => open(el.dataset.i));
         el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") open(el.dataset.i); });
       });
     }
-
-    const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
     // ---- Lightbox ----
     let CUR = 0;
@@ -278,7 +303,7 @@
     function open(i) {
       CUR = Math.max(0, Math.min(PHOTOS.length - 1, +i));
       const p = PHOTOS[CUR];
-      lbImg.src = p.src; lbImg.alt = p.caption || "Convention photo";
+      lbImg.src = p.src; lbImg.alt = p.caption || "fellowship photo";
       lbCap.innerHTML = `${p.caption ? "<b>" + esc(p.caption) + "</b>" : "Photo"}${p.credit ? " · " + esc(p.credit) : ""}${p.date ? " · " + esc(p.date) : ""} · ${esc(p.album)}`;
       lbDl.href = p.src;
       document.getElementById("lb-i").textContent = CUR + 1;

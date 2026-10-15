@@ -5,9 +5,12 @@
       "title": "The Inaugural PIR® Convention",
       "when": "October 8-11, 2026",
       "place": "Denver, Colorado",
+      "icon": "ph-confetti",
+      "featured": true,
+      "astro": "https://psychedelicsinrecovery.github.io/convention-astro/",
       "pixieset": "https://pir68.pixieset.com/psychedelicsinrecoverytminauguralconventiondenver2026/",
-      "emptyTitle": "The album is being gathered",
-      "emptyBody": "The fellowship is gathering its photos from Denver. Until they land here, browse the shared Pixieset album — and add your own with the link below.",
+      "emptyTitle": "The Denver album is being gathered",
+      "emptyBody": "The fellowship is gathering its photos from the Inaugural Convention. Until they land here, browse the shared Pixieset album — and add your own with the links above.",
       "photos": []
     }
   ]
