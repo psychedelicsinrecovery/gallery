@@ -20,9 +20,7 @@
   <link rel="stylesheet" href="https://psychedelicsinrecovery.github.io/arrival/org.css" />
   <link rel="stylesheet" href="https://psychedelicsinrecovery.github.io/alex-desk-public/assets/alex.css" />
   <style>
-    /* The Gallery's own layer. All custom tokens are site-prefixed (--gal-*) on purpose:
-       the kit already owns --ink, --muted, --accent and friends, and borrowing their names
-       collided with them (--ink is a gradient in the kit, not a text color). */
+    /* Site-prefixed tokens on purpose: the kit owns --ink, --muted and friends. */
     :root {
       --gal-ink: #f3eee4;
       --gal-muted: rgba(243, 238, 228, 0.66);
@@ -34,27 +32,23 @@
       --gal-sans: "Manrope", system-ui, sans-serif;
     }
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
     body { margin: 0; min-height: 100vh; color: var(--gal-ink); background: #06050e; font-family: var(--gal-sans); -webkit-font-smoothing: antialiased; }
     #starfield-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
     .gal-wrap { max-width: 1180px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); position: relative; z-index: 5; }
 
     header.top { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(12px); background: rgba(6, 5, 14, 0.55); border-bottom: 1px solid var(--gal-line); }
-    header.top .gal-wrap { display: flex; align-items: center; gap: 1rem; min-height: 64px; }
-    .gal-brand { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--gal-ink); font-family: var(--gal-serif); font-weight: 700; font-size: 1.1rem; }
-    .gal-brand img { border-radius: 9px; }
-    .gal-brand small { font-family: var(--gal-sans); font-weight: 600; font-size: 0.72rem; color: var(--gal-gold); letter-spacing: 0.08em; }
-
+    header.top .wrap { display: flex; align-items: center; gap: 1rem; min-height: 64px; max-width: 1180px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
     main { position: relative; z-index: 10; }
-    .gal-hero { padding: clamp(2.6rem, 7vw, 5rem) 0 1.4rem; position: relative; }
-    .gal-hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 50% at 70% 0%, rgba(167, 139, 250, 0.14), transparent 70%), radial-gradient(40% 40% at 15% 10%, rgba(232, 180, 90, 0.1), transparent 70%); pointer-events: none; }
+    .gal-hero { padding: clamp(2.4rem, 6vw, 4rem) 0 1.2rem; text-align: center; }
+    .gal-hero .gal-kicker { margin-inline: auto; }
+    .gal-hero .gal-lede { margin-inline: auto; }
     .gal-kicker { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gal-gold); border: 1px solid rgba(232, 180, 90, 0.35); border-radius: 999px; padding: 0.35rem 0.9rem; background: rgba(232, 180, 90, 0.08); }
     h1 { font-family: var(--gal-serif); font-size: clamp(2.2rem, 5.5vw, 3.8rem); line-height: 1.05; letter-spacing: -0.02em; margin: 1rem 0 0.7rem; color: var(--gal-ink); }
     .gal-lede { font-size: clamp(1rem, 1.5vw, 1.18rem); color: var(--gal-muted); max-width: 62ch; line-height: 1.6; }
     .gal-lede a, .gal-band a.inline { color: var(--gal-gold); text-decoration: none; }
     .gal-lede a:hover, .gal-band a.inline:hover { text-decoration: underline; }
-    .gal-cta { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.6rem; }
-    .gal-btn { display: inline-flex; align-items: center; gap: 0.55rem; font-family: var(--gal-sans); font-weight: 700; font-size: 0.95rem; padding: 0.72rem 1.35rem; border-radius: 999px; text-decoration: none; border: 1px solid var(--gal-line); color: var(--gal-ink); background: var(--gal-panel); transition: transform 0.15s, border-color 0.15s; cursor: pointer; }
+    .gal-cta { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.6rem; justify-content: center; }
+    .gal-btn { display: inline-flex; align-items: center; gap: 0.55rem; font-weight: 700; font-size: 0.95rem; padding: 0.72rem 1.35rem; border-radius: 999px; text-decoration: none; border: 1px solid var(--gal-line); color: var(--gal-ink); background: var(--gal-panel); transition: transform 0.15s, border-color 0.15s; cursor: pointer; }
     .gal-btn:hover { transform: translateY(-2px); border-color: rgba(232, 180, 90, 0.55); }
     .gal-btn.primary { background: linear-gradient(120deg, var(--gal-violet), var(--gal-gold)); color: #17120a; border-color: transparent; }
 
@@ -68,6 +62,13 @@
     .gal-track em { font-style: normal; color: var(--gal-violet); }
     @keyframes gal-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
     @media (prefers-reduced-motion: reduce) { .gal-track { animation: none; flex-wrap: wrap; width: auto; justify-content: center; } }
+
+    /* Image-tile marquee + centered hero */
+    .gal-tile { position: relative; flex: 0 0 auto; width: 212px; aspect-ratio: 1 / 1; border-radius: 16px; overflow: hidden; border: 1px solid var(--gal-line, rgba(255, 255, 255, 0.12)); background: var(--gal-panel, #141126); }
+    .gal-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .gal-tile figcaption { position: absolute; inset: auto 0 0 0; padding: 0.55rem 0.7rem; font-size: 0.78rem; font-weight: 600; color: #f3eee4; background: linear-gradient(transparent, rgba(6, 5, 14, 0.92)); opacity: 0; transition: opacity 0.18s ease; }
+    .gal-tile:hover figcaption { opacity: 1; }
+    .gal-marquee-note { margin: 0.2rem 0 0.5rem; font-size: 0.82rem; font-style: italic; color: rgba(243, 238, 228, 0.55); }
 
     /* Album spot cards — the entry-portal card language */
     .gal-band { padding: clamp(1.6rem, 4vw, 2.6rem) 0; }
@@ -84,11 +85,13 @@
     .gal-story .row { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 0.8rem; }
 
     .gal-spots { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 1rem; margin: 0.4rem 0 1rem; }
-    .gal-spot { position: relative; display: flex; flex-direction: column; gap: 0.5rem; border: 1px solid var(--gal-line); border-radius: 18px; background: var(--gal-panel); padding: 1.3rem; text-decoration: none; color: var(--gal-ink); transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease; }
+    .gal-spot { position: relative; display: flex; flex-direction: column; gap: 0.35rem; border: 1px solid var(--gal-line); border-radius: 18px; background: var(--gal-panel); padding: 1.4rem; text-decoration: none; color: var(--gal-ink); transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease; }
     .gal-spot:hover { transform: translateY(-3px); border-color: rgba(232, 180, 90, 0.55); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35); }
-    .gal-spot .s-icon { font-size: 1.5rem; color: var(--gal-gold); }
+    .gal-spot .s-icon { display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 12px; background: rgba(232, 180, 90, 0.12); border: 1px solid rgba(232, 180, 90, 0.25); color: var(--gal-gold); font-size: 1.25rem; margin-bottom: 0.4rem; }
+    .gal-spot.featured .s-icon { background: rgba(167, 139, 250, 0.14); border-color: rgba(167, 139, 250, 0.35); color: var(--gal-violet); }
     .gal-spot h3 { font-family: var(--gal-serif); font-size: 1.15rem; margin: 0; color: var(--gal-ink); }
-    .gal-spot .s-meta { font-size: 0.83rem; color: var(--gal-muted); }
+    .gal-spot .s-meta { font-size: 0.83rem; color: var(--gal-muted); display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
+    .gal-spot .s-count { display: inline-flex; align-items: center; font-size: 0.72rem; font-weight: 700; color: var(--gal-gold); background: rgba(232, 180, 90, 0.1); border: 1px solid rgba(232, 180, 90, 0.3); border-radius: 999px; padding: 0.14rem 0.55rem; }
     .gal-spot .s-links { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.5rem; }
     .gal-spot .s-links a { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; font-weight: 600; color: var(--gal-ink); text-decoration: none; border: 1px solid var(--gal-line); border-radius: 999px; padding: 0.32rem 0.75rem; }
     .gal-spot .s-links a:hover { border-color: rgba(232, 180, 90, 0.55); }
@@ -122,6 +125,11 @@
     footer { position: relative; z-index: 10; border-top: 1px solid var(--gal-line); margin-top: 3rem; padding: 2.2rem 0 2.6rem; color: var(--gal-muted); font-size: 0.84rem; line-height: 1.7; }
     footer a { color: var(--gal-gold); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
+    .pir-foot { display: grid; grid-template-columns: 1.2fr 2fr; gap: 2rem; align-items: start; max-width: 1180px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); font-family: var(--gal-sans); }
+    .tended { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.8rem; color: rgba(243, 238, 228, 0.66); text-decoration: none; font-size: 0.8rem; }
+    .tended b { color: var(--gal-gold); font-family: var(--gal-serif); }
+    .cat-mark { width: 0.85rem; height: 0.85rem; border-radius: 50%; background: conic-gradient(from 180deg, #e8b45a, #a78bfa, #e8b45a); }
+    @media (max-width: 860px) { .pir-foot { grid-template-columns: 1fr; } }
 
     /* Lightbox */
     .gal-lb { position: fixed; inset: 0; z-index: 90; display: none; background: rgba(4, 3, 10, 0.92); backdrop-filter: blur(8px); }
@@ -143,310 +151,45 @@
     @media (max-width: 640px) { .gal-lb .stage { padding: 0 0.5rem; } .gal-lb .arrow { width: 2.4rem; height: 2.4rem; } .gal-lb .arrow.prev { left: 0.4rem; } .gal-lb .arrow.next { right: 0.4rem; } }
     @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 
-    /* Image-tile marquee (replaces the text marquee) + centered hero + hub-chrome fallbacks */
-    .gal-tile {
-      position: relative;
-      flex: 0 0 auto;
-      width: 212px;
-      aspect-ratio: 1 / 1;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid var(--gal-line, rgba(255, 255, 255, 0.12));
-      background: var(--gal-panel, #141126);
-    }
-    .gal-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .gal-tile figcaption {
-      position: absolute;
-      inset: auto 0 0 0;
-      padding: 0.55rem 0.7rem;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: #f3eee4;
-      background: linear-gradient(transparent, rgba(6, 5, 14, 0.92));
-      opacity: 0;
-      transition: opacity 0.18s ease;
-    }
-    .gal-tile:hover figcaption { opacity: 1; }
-    .gal-marquee-note { margin: 0.2rem 0 0.5rem; font-size: 0.82rem; font-style: italic; color: rgba(243, 238, 228, 0.55); }
-    .gal-hero { text-align: center; }
-    .gal-hero .gal-kicker { margin-inline: auto; }
-    .gal-hero .gal-lede { margin-inline: auto; }
-    .gal-hero .gal-cta { justify-content: center; }
-    /* fallback chrome (hub parity) if the kit hasn't styled these classes */
-    .top .wrap { max-width: 1180px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); display: flex; align-items: center; gap: 1rem; min-height: 64px; }
-    .brand { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; color: #f3eee4; font-family: "Fraunces", Georgia, serif; font-weight: 700; font-size: 1.12rem; }
+    /* hub parity for the footer chrome */
+    .brand { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--gal-ink); font-family: var(--gal-serif); font-weight: 700; font-size: 1.1rem; }
     .brand img { border-radius: 9px; }
-    .brand small { font-family: "Manrope", system-ui, sans-serif; font-weight: 600; font-size: 0.72rem; color: #e8b45a; letter-spacing: 0.08em; margin-left: 0.4rem; }
-    .pir-foot { display: grid; grid-template-columns: 1.2fr 2fr; gap: 2rem; align-items: start; max-width: 1180px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); font-family: "Manrope", system-ui, sans-serif; }
-    .tended { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.8rem; color: rgba(243, 238, 228, 0.66); text-decoration: none; font-size: 0.8rem; }
-    .tended b { color: #e8b45a; font-family: "Fraunces", Georgia, serif; }
-    .cat-mark { width: 0.85rem; height: 0.85rem; border-radius: 50%; background: conic-gradient(from 180deg, #e8b45a, #a78bfa, #e8b45a); }
-    @media (max-width: 860px) { .pir-foot { grid-template-columns: 1fr; } }
+    .brand small { font-family: var(--gal-sans); font-weight: 600; font-size: 0.72rem; color: var(--gal-gold); letter-spacing: 0.08em; margin-left: 0.4rem; }
 
-    /* Header dropdown + CTA */
+    /* Header dropdown */
     .brand-drop { position: relative; }
     .brand-drop summary { list-style: none; cursor: pointer; }
     .brand-drop summary::-webkit-details-marker { display: none; }
-    .brand-drop summary .ph-caret-down { font-size: 0.8rem; color: #e8b45a; transition: transform 0.15s ease; }
+    .brand-drop summary .ph-caret-down { font-size: 0.8rem; color: var(--gal-gold); transition: transform 0.15s ease; }
     .brand-drop[open] summary .ph-caret-down { transform: rotate(180deg); }
     .brand-menu { position: absolute; top: calc(100% + 0.6rem); left: 0; z-index: 60; min-width: 300px; display: grid; gap: 0.15rem; padding: 0.6rem; border: 1px solid var(--gal-line); border-radius: 14px; background: rgba(11, 9, 24, 0.97); backdrop-filter: blur(12px); box-shadow: 0 18px 50px rgba(0,0,0,0.5); }
     .brand-menu a { display: flex; align-items: center; gap: 0.6rem; padding: 0.55rem 0.7rem; border-radius: 9px; color: var(--gal-ink); text-decoration: none; font-size: 0.9rem; font-weight: 600; }
     .brand-menu a:hover { background: rgba(255, 255, 255, 0.06); color: var(--gal-gold); }
     .brand-menu a i { color: var(--gal-gold); font-size: 1rem; }
-    .head-cta { margin-left: auto; font-size: 0.85rem; padding: 0.5rem 1rem; }
-    @media (max-width: 860px) { .head-cta { display: none; } }
 
     /* Scroll progress line */
     .gal-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; z-index: 100; background: linear-gradient(90deg, #e8b45a, #a78bfa); }
-
-    /* Albums: professional card polish */
-    .gal-spot { padding: 1.4rem; gap: 0.35rem; }
-    .gal-spot .s-icon { display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 12px; background: rgba(232, 180, 90, 0.12); border: 1px solid rgba(232, 180, 90, 0.25); color: var(--gal-gold); font-size: 1.25rem; margin-bottom: 0.4rem; }
-    .gal-spot.featured .s-icon { background: rgba(167, 139, 250, 0.14); border-color: rgba(167, 139, 250, 0.35); color: var(--gal-violet); }
-    .gal-spot .s-meta { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
-    .gal-spot .s-count { display: inline-flex; align-items: center; font-size: 0.72rem; font-weight: 700; color: var(--gal-gold); background: rgba(232, 180, 90, 0.1); border: 1px solid rgba(232, 180, 90, 0.3); border-radius: 999px; padding: 0.14rem 0.55rem; }
     .gal-band-head .gal-count { font-size: 0.8rem; font-weight: 700; color: var(--gal-violet); background: rgba(167, 139, 250, 0.1); border: 1px solid rgba(167, 139, 250, 0.3); border-radius: 999px; padding: 0.2rem 0.7rem; }
+
+    /* The dropdown invites the first click */
+    .brand-drop .brand { padding: 0.25rem 0.45rem; border-radius: 12px; animation: brand-pulse 2.6s ease-in-out infinite; }
+    .brand-drop[open] .brand, .brand-drop.seen .brand { animation: none; }
+    .brand-drop .tap-hint { margin-left: 0.15rem; font: 700 0.62rem/1 var(--gal-sans); letter-spacing: 0.08em; text-transform: uppercase; color: #17120a; background: linear-gradient(120deg, var(--gal-gold), var(--gal-violet)); border-radius: 999px; padding: 0.3rem 0.55rem; animation: hint-float 2.6s ease-in-out infinite; white-space: nowrap; }
+    .brand-drop[open] .tap-hint, .brand-drop.seen .tap-hint { opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+    @keyframes brand-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(232, 180, 90, 0); } 50% { box-shadow: 0 0 0 6px rgba(232, 180, 90, 0.16), 0 0 16px 2px rgba(232, 180, 90, 0.22); } }
+    @keyframes hint-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+
+    /* Album chips: a real button, not a hyperlink */
+    .gal-spot .s-links a { padding: 0.45rem 0.85rem; font-size: 0.8rem; font-weight: 700; transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease; }
+    .gal-spot .s-links a.s-primary { background: linear-gradient(120deg, var(--gal-violet), var(--gal-gold)); color: #17120a; border-color: transparent; }
+    .gal-spot .s-links a.s-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
+    .gal-spot .s-links a.s-ghost { background: transparent; }
+    .gal-spot .s-links a.s-ghost:hover { border-color: rgba(232, 180, 90, 0.55); color: var(--gal-gold); transform: translateY(-1px); }
+
+    /* The Convention site stands out from the crowd */
+    .gal-btn.convention-cta { background: linear-gradient(120deg, var(--gal-gold), var(--gal-violet)); color: #17120a; border-color: transparent; animation: conv-glow 2.8s ease-in-out infinite; }
+    .gal-btn.convention-cta .ph-arrow-right { transition: transform 0.18s ease; }
+    .gal-btn.convention-cta:hover .ph-arrow-right { transform: translateX(4px); }
+    @keyframes conv-glow { 0%, 100% { box-shadow: 0 0 0 0 rgba(232, 180, 90, 0); } 50% { box-shadow: 0 0 22px 0 rgba(232, 180, 90, 0.35); } }
   </style>
 </head>
-<body>
-  <div class="gal-progress" aria-hidden="true"></div>
-  <canvas id="starfield-canvas" aria-hidden="true"></canvas>
-
-  <header class="top">
-    <div class="wrap">
-      <details class="brand-drop">
-        <summary class="brand">
-          <img src="favicon.svg" alt="" width="34" height="34" />
-          <span class="arr-brand-text">Gallery <small>PIR®</small></span>
-          <i class="ph-fill ph-caret-down" aria-hidden="true"></i>
-        </summary>
-        <div class="brand-menu">
-          <a href="index.html"><i class="ph-fill ph-images"></i> The albums</a>
-          <a href="walkthrough.html"><i class="ph-fill ph-map-trifold"></i> Add your photos — the walkthrough</a>
-          <a href="https://pir68.pixieset.com/psychedelicsinrecoverytminauguralconventiondenver2026/" target="_blank" rel="noopener"><i class="ph-fill ph-image"></i> The Pixieset album (temporary)</a>
-          <a href="https://psychedelicsinrecovery.github.io/convention-astro/gallery/"><i class="ph-fill ph-confetti"></i> The Convention gallery</a>
-          <a href="https://psychedelicsinrecovery.github.io/convention-astro/"><i class="ph-fill ph-confetti"></i> The Convention site</a>
-          <a href="https://drive.google.com/drive/folders/1zUL1fHkDIWJLKrtHzfFToceFoFl-PiTu?usp=sharing" target="_blank" rel="noopener"><i class="ph-fill ph-folder-open"></i> The shared Drive folder</a>
-        </div>
-      </details>
-      <arrival-nav></arrival-nav>
-      <arrival-controls></arrival-controls>
-      <a class="gal-btn head-cta" href="walkthrough.html"><i class="ph-fill ph-hand-heart"></i> Add your photos</a>
-    </div>
-  </header>
-
-  <main>
-    <div class="gal-wrap">
-      <section class="gal-hero">
-        <span class="gal-kicker"><i class="ph-fill ph-images"></i> Kept on the fellowship's own ground</span>
-        <h1>The PIR® Gallery</h1>
-        <p class="gal-lede">
-          The photo albums of <strong style="color: var(--gal-ink)">Psychedelics In Recovery™ – PIR®</strong> — not tied to any one event.
-          Conventions, gatherings, service years, whatever the fellowship makes next: every album lives
-          here, served straight from the fellowship's repository, fast anywhere in the world, and
-          costing nothing but care. Born from a WhatsApp request that went wonderfully rogue.
-        </p>
-        <div class="gal-cta">
-          <a class="gal-btn primary" href="walkthrough.html"><i class="ph-fill ph-map-trifold"></i> Add your photos — the walkthrough</a>
-          <a class="gal-btn" href="#albums"><i class="ph-fill ph-images"></i> Browse the albums</a>
-          <a class="gal-btn" href="https://psychedelicsinrecovery.github.io/convention-astro/"><i class="ph-fill ph-confetti"></i> The Convention site</a>
-        </div>
-      </section>
-    </div>
-
-    <!-- The marquee: a gentle, endless loop of what the albums will hold. Placeholders until the
-         photos land — swap the list as real albums fill in. Decorative; pauses on hover. -->
-    <div class="gal-marquee" role="img" aria-label="A scrolling preview of the moments the albums will hold">
-      <div class="gal-marquee-label">In the albums, moments like these</div>
-      <p class="gal-marquee-note">Illustrated previews — as albums come in, real photos take their places here.</p><div class="gal-track" id="galTrack"><figure class="gal-tile"><img src="assets/placeholders/tile-1.svg" alt="" loading="lazy" /><figcaption>The opening ceremony</figcaption></figure><figure class="gal-tile"><img src="assets/placeholders/tile-2.svg" alt="" loading="lazy" /><figcaption>Panels & speakers</figcaption></figure><figure class="gal-tile"><img src="assets/placeholders/tile-3.svg" alt="" loading="lazy" /><figcaption>The first hug in person</figcaption></figure><figure class="gal-tile"><img src="assets/placeholders/tile-4.svg" alt="" loading="lazy" /><figcaption>Candlelight meetings</figcaption></figure><figure class="gal-tile"><img src="assets/placeholders/tile-5.svg" alt="" loading="lazy" /><figcaption>Art & creativity</figcaption></figure><figure class="gal-tile"><img src="assets/placeholders/tile-6.svg" alt="" loading="lazy" /><figcaption>Fellowship dinners</figcaption></figure><figure class="gal-tile"><img src="assets/placeholders/tile-1.svg" alt="" loading="lazy" /><figcaption>The opening ceremony</figcaption></figure><figure class="gal-tile"><img src="assets/placeholders/tile-2.svg" alt="" loading="lazy" /><figcaption>Panels & speakers</figcaption></figure><figure class="gal-tile"><img src="assets/placeholders/tile-3.svg" alt="" loading="lazy" /><figcaption>The first hug in person</figcaption></figure><figure class="gal-tile"><img src="assets/placeholders/tile-4.svg" alt="" loading="lazy" /><figcaption>Candlelight meetings</figcaption></figure><figure class="gal-tile"><img src="assets/placeholders/tile-5.svg" alt="" loading="lazy" /><figcaption>Art & creativity</figcaption></figure><figure class="gal-tile"><img src="assets/placeholders/tile-6.svg" alt="" loading="lazy" /><figcaption>Fellowship dinners</figcaption></figure></div>
-    </div>
-
-    <div class="gal-wrap">
-      <section class="gal-story">
-        <h2><i class="ph-fill ph-sparkle"></i> How this gallery began</h2>
-        <p>
-          It started with a simple favor: getting <strong>Anne R.'s</strong> Pixieset album onto
-          <em>gallery.psychedelicsinrecovery.org</em> for the Inaugural Convention photos. One WhatsApp thread later, the
-          fellowship had a shared Google Drive gathering everyone's photos from Denver — and a
-          decision: the photos of our recovery deserve a home we own. So the fellowship built this
-          gallery on GitHub: no platform, no expiry, no cost — the Pixieset album that sparked it is woven
-          right in below.
-        </p>
-        <div class="row">
-          <a class="gal-btn" href="https://pir68.pixieset.com/psychedelicsinrecoverytminauguralconventiondenver2026/" target="_blank" rel="noopener"><i class="ph-fill ph-image"></i> The Pixieset album that started it</a>
-          <a class="gal-btn" href="https://psychedelicsinrecovery.github.io/convention-astro/"><i class="ph-fill ph-confetti"></i> The Convention it honors</a>
-        </div>
-      </section>
-
-      <section id="albums" class="gal-band" aria-live="polite">
-        <div class="gal-band-head"><h2>The albums</h2><span class="rule"></span><a href="walkthrough.html">Add your own ↗</a></div>
-        <p class="gal-lede" style="font-size:0.9rem;margin-top:0">Every album is a folder in the repository and a card below. Featured albums glow a little brighter.</p>
-        <div class="gal-spots" id="spots"></div>
-        <div id="sections"></div>
-      </section>
-
-      <section class="gal-add">
-        <h2><i class="ph-fill ph-hand-heart"></i> Add your photos</h2>
-        <p>
-          Were you there? Four paths, all easy: send your photos to a trusted servant and they
-          will place them with care, drop them in the shared Drive folder, use GitHub's own web
-          interface from your browser (no terminal needed), or walk the full process yourself — naming, captions, credits and all — in the
-          walkthrough. If you would rather not appear in a photo, tell a trusted servant and it
-          comes down immediately: the fellowship's consent comes first.
-        </p>
-        <div class="row">
-          <a class="gal-btn primary" href="walkthrough.html"><i class="ph-fill ph-map-trifold"></i> Walk through the process</a>
-          <a class="gal-btn" href="walkthrough.html#web"><i class="ph-fill ph-browser"></i> The browser-only path</a>
-          <button class="gal-btn" type="button" data-arrival-open="contact"><i class="ph-fill ph-hand-heart"></i> Send them to a trusted servant</button>
-          <a class="gal-btn" href="https://drive.google.com/drive/folders/1zUL1fHkDIWJLKrtHzfFToceFoFl-PiTu?usp=sharing" target="_blank" rel="noopener"><i class="ph-fill ph-upload-simple"></i> Upload to the shared Drive folder</a>
-        </div>
-        <p class="gal-consent">
-          Photos are shared with the fellowship's consent. To object to a photo being published,
-          contact the gallery's trusted servants and it will be removed immediately.
-        </p>
-      </section>
-    </div>
-  </main>
-
-  <footer>
-    <div class="wrap pir-foot">
-      <div>
-        <a class="brand" href="https://psychedelicsinrecovery.github.io/">
-          <img src="favicon.svg" alt="" width="34" height="34" />
-          <span class="arr-brand-text">Gallery <small>PIR®</small></span>
-        </a>
-        <span style="display:block;margin-top:0.7rem;max-width:34ch">The photo albums of Psychedelics In Recovery™ – PIR®, kept on the fellowship's own ground.</span>
-        <a class="tended" href="https://psychedelicsinrecovery.github.io/catalyst-desk-public/"><span class="cat-mark"></span>Tended by <b>C.A.T.A.L.Y.S.T.</b>, PIR®'s helper fleet</a>
-      </div>
-      <arrival-footer></arrival-footer>
-    </div>
-  </footer>
-
-  <!-- Lightbox -->
-  <div class="gal-lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
-    <div class="lb-top">
-      <span class="count"><b id="lb-i">1</b> / <span id="lb-n">1</span></span>
-      <span class="spacer"></span>
-      <a class="dl" id="lb-dl" href="#" download target="_blank" rel="noopener"><i class="ph-fill ph-download-simple"></i> Download</a>
-      <button class="x" id="lb-x" aria-label="Close"><i class="ph-fill ph-x"></i> Close</button>
-    </div>
-    <div class="stage">
-      <button class="arrow prev" id="lb-prev" aria-label="Previous photo"><i class="ph-fill ph-caret-left"></i></button>
-      <img id="lb-img" alt="" />
-      <button class="arrow next" id="lb-next" aria-label="Next photo"><i class="ph-fill ph-caret-right"></i></button>
-    </div>
-    <div class="lb-cap" id="lb-cap"></div>
-  </div>
-
-  <!-- The kit override: this site's name and welcome, read by the kit before it runs. -->
-  <script>
-    window.ARRIVAL_SITE = {
-      name: "the PIR® Gallery",
-      what: "This is the fellowship's own gallery of Psychedelics In Recovery™ – PIR®: every album the fellowship makes, kept on its own ground. To add your photos, open the walkthrough.",
-    };
-  </script>
-  <script>
-    // The gallery reads photos.json — one file, built by tools/build_manifest.py.
-    // Albums with "featured": true get the glowing spot card and, if they carry an "astro" link,
-    // a bridge to their Astro site (the Convention's home).
-    fetch("photos.json")
-      .then((r) => { if (!r.ok) throw new Error("photos.json not found"); return r.json(); })
-      .then(render)
-      .catch(() => {
-        document.getElementById("sections").innerHTML =
-          '<div class="gal-empty"><i class="ph-fill ph-camera"></i><h3>The albums are still being gathered</h3>' +
-          '<p>photos.json could not be loaded yet. Once photos land in <code>assets/albums/</code> and the manifest is built, they will appear right here.</p>' +
-          '<a class="gal-btn primary" href="walkthrough.html">Walk through the process</a></div>';
-      });
-
-    let PHOTOS = [];
-
-    function esc(s) { return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
-
-    function render(data) {
-      const albums = (data.albums || []).filter((a) => !a.hidden);
-      const spots = document.getElementById("spots");
-      const sections = document.getElementById("sections");
-      spots.innerHTML = albums.map((a) => {
-        const n = (a.photos || []).length;
-        const links = [
-          `<a href="#album-${esc(a.id)}"><i class="ph-fill ${n ? "ph-images" : "ph-hourglass"}"></i> ${n ? "Browse below" : "Coming soon"}</a>`,
-        ];
-        if (a.pixieset) links.push(`<a href="${esc(a.pixieset)}" target="_blank" rel="noopener"><i class="ph-fill ph-arrow-up-right"></i> Pixieset</a>`);
-        if (a.astro) links.push(`<a href="${esc(a.astro)}"><i class="ph-fill ph-confetti"></i> Its Astro site</a>`);
-        return (
-          `<a class="gal-spot ${a.featured ? "featured" : ""}" id="spot-${esc(a.id)}" href="#album-${esc(a.id)}">` +
-          `<span class="s-icon"><i class="ph-fill ${a.icon || "ph-images"}"></i></span>` +
-          `<h3>${esc(a.title)}</h3>` +
-          `<span class="s-meta">${esc(a.when || "")}${a.place ? " · " + esc(a.place) : ""}</span>` +
-          `<span class="s-meta"><span class="s-count">${n ? n + " photo" + (n === 1 ? "" : "s") : "gathering now"}</span></span>` +
-          `<span class="s-links">${links.join("")}</span></a>`
-        );
-      }).join("");
-
-      PHOTOS = [];
-      sections.innerHTML = albums.map((a) => {
-        const photos = (a.photos || []).filter((p) => !p.hidden);
-        const start = PHOTOS.length;
-        photos.forEach((p, i) => PHOTOS.push({ ...p, album: a.title, index: start + i }));
-        const head =
-          `<div class="gal-album-head" id="album-${esc(a.id)}"><h2>${esc(a.title)}</h2>` +
-          `<div class="meta">${esc(a.when || "")}${a.place ? " · " + esc(a.place) : ""}${photos.length ? " · " + photos.length + " photos" : ""}</div>` +
-          (a.astro ? `<div class="meta"><a class="inline" href="${esc(a.astro)}">Read the story of this gathering on its Astro site →</a></div>` : "") +
-          `</div>`;
-        if (!photos.length)
-          return head +
-            '<div class="gal-empty"><i class="ph-fill ph-camera"></i><h3>' + esc(a.emptyTitle || "The album is being gathered") + "</h3><p>" +
-            esc(a.emptyBody || "Photos land here as the fellowship shares them — add yours with the links above.") +
-            '</p><a class="gal-btn primary" href="walkthrough.html"><i class="ph-fill ph-map-trifold"></i> How to add yours</a></div>';
-        const cells = photos.map((p, i) =>
-          `<figure class="gal-ph" data-i="${start + i}" tabindex="0" role="button" aria-label="Open photo: ${esc(p.caption || "fellowship photo")}">` +
-          `<img loading="lazy" src="${esc(p.thumb || p.src)}" alt="${esc(p.caption || a.title + " photo")}" ${p.w ? `width="${p.w}" height="${p.h}"` : ""}/>` +
-          `${p.caption ? `<figcaption class="cap">${esc(p.caption)}${p.credit ? " · " + esc(p.credit) : ""}</figcaption>` : ""}</figure>`
-        ).join("");
-        return head + `<div class="gal-masonry">${cells}</div>`;
-      }).join("");
-
-      sections.querySelectorAll(".gal-ph").forEach((el) => {
-        el.addEventListener("click", () => open(el.dataset.i));
-        el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") open(el.dataset.i); });
-      });
-    }
-
-    // ---- Lightbox ----
-    let CUR = 0;
-    const lb = document.getElementById("lb"), lbImg = document.getElementById("lb-img"),
-      lbCap = document.getElementById("lb-cap"), lbDl = document.getElementById("lb-dl");
-    function open(i) {
-      CUR = Math.max(0, Math.min(PHOTOS.length - 1, +i));
-      const p = PHOTOS[CUR];
-      lbImg.src = p.src; lbImg.alt = p.caption || "fellowship photo";
-      lbCap.innerHTML = `${p.caption ? "<b>" + esc(p.caption) + "</b>" : "Photo"}${p.credit ? " · " + esc(p.credit) : ""}${p.date ? " · " + esc(p.date) : ""} · ${esc(p.album)}`;
-      lbDl.href = p.src;
-      document.getElementById("lb-i").textContent = CUR + 1;
-      document.getElementById("lb-n").textContent = PHOTOS.length;
-      lb.classList.add("open");
-      document.body.style.overflow = "hidden";
-    }
-    function close() { lb.classList.remove("open"); document.body.style.overflow = ""; lbImg.src = ""; }
-    function step(d) { open((CUR + d + PHOTOS.length) % PHOTOS.length); }
-    document.getElementById("lb-x").addEventListener("click", close);
-    document.getElementById("lb-prev").addEventListener("click", () => step(-1));
-    document.getElementById("lb-next").addEventListener("click", () => step(1));
-    lb.addEventListener("click", (e) => { if (e.target === lb) close(); });
-    document.addEventListener("keydown", (e) => {
-      if (!lb.classList.contains("open")) return;
-      if (e.key === "Escape") close();
-      if (e.key === "ArrowLeft") step(-1);
-      if (e.key === "ArrowRight") step(1);
-    });
-  </script>
-  <script>
-    addEventListener("scroll", function () {
-      var d = document.documentElement, p = document.querySelector(".gal-progress");
-      if (p) p.style.width = Math.round((d.scrollTop / Math.max(1, d.scrollHeight - d.clientHeight)) * 100) + "%";
-    }, { passive: true });
-  </script>
-  <script src="https://psychedelicsinrecovery.github.io/starfield.js" defer></script>
-</body>
-</html>
