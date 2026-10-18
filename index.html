@@ -39,7 +39,11 @@
     header.top { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(12px); background: rgba(6, 5, 14, 0.55); border-bottom: 1px solid var(--gal-line); }
     header.top .wrap { display: flex; align-items: center; gap: 1rem; min-height: 64px; max-width: 1180px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
     main { position: relative; z-index: 10; }
-    .gal-hero { padding: clamp(2.4rem, 6vw, 4rem) 0 1.2rem; text-align: center; }
+    /* 2026-10-18: the hero floors at the viewport, so the scroll cue lives at the
+       viewport bottom on load - same feel as the Convention site heroes. */
+    .gal-hero { padding: clamp(2.4rem, 6vw, 4rem) 0 1.2rem; text-align: center; min-height: calc(100svh - 5.5rem); display: flex; flex-direction: column; justify-content: center; }
+    @supports not (min-height: 100svh) { .gal-hero { min-height: calc(100vh - 5.5rem); } }
+    @media (max-width: 720px) { .gal-hero { min-height: calc(100svh - 4.2rem); } }
     .gal-hero .gal-kicker { margin-inline: auto; }
     .gal-hero .gal-lede { margin-inline: auto; }
     .gal-kicker { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gal-gold); border: 1px solid rgba(232, 180, 90, 0.35); border-radius: 999px; padding: 0.35rem 0.9rem; background: rgba(232, 180, 90, 0.08); }
@@ -173,9 +177,11 @@
     .arr-foot-groups { grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr)); }
     @keyframes conv-bounce { 0%, 100% { translate: 0 0; } 50% { translate: 0 -4px; } }
     .gal-btn.conv-pulse { animation: conv-glow 2.8s ease-in-out infinite, conv-bounce 2.8s ease-in-out infinite; }
-    /* Scroll cue: a gentle nudge at the hero's edge that bows out once you scroll */
+    /* Scroll cue: a gentle nudge at the hero's edge that bows out once you scroll.
+       2026-10-18: hugs the hero floor now (bottom: 1.2rem) so on load it sits at the
+       bottom of the viewport, matching the Convention site. */
     .gal-hero { position: relative; }
-    .scroll-cue { position: absolute; left: 50%; bottom: 4.3rem; transform: translateX(-50%); display: grid; place-items: center; color: var(--gal-gold); opacity: 1; transition: opacity 0.35s ease; pointer-events: none; z-index: 20; }
+    .scroll-cue { position: absolute; left: 50%; bottom: 1.2rem; transform: translateX(-50%); display: grid; place-items: center; color: var(--gal-gold); opacity: 1; transition: opacity 0.35s ease; pointer-events: none; z-index: 20; }
     .scroll-cue i { font-size: 1.45rem; animation: cue-b 1.8s ease-in-out infinite; }
     .scroll-cue small { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.75; }
     @keyframes cue-b { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
@@ -214,6 +220,13 @@
 
     /* The Convention site stands out from the crowd */
     .gal-btn.convention-cta { background: linear-gradient(120deg, var(--gal-gold), var(--gal-violet)); color: #17120a; border-color: transparent; animation: conv-glow 2.8s ease-in-out infinite; }
+    /* 2026-10-18 - color-code the hero buttons so each one reads as its own destination;
+       the kicker pill above stays a quiet tag. Buttons lift on hover, tags do not. */
+    .gal-btn { transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease; }
+    .gal-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+    .gal-btn.albums-cta { background: linear-gradient(120deg, var(--gal-gold), #ff9e5c); color: #17120a; border-color: transparent; box-shadow: 0 4px 18px rgba(232, 180, 90, 0.3); animation: conv-glow 3.4s ease-in-out infinite; }
+    .gal-btn.primary { box-shadow: 0 4px 18px rgba(138, 92, 255, 0.3); }
+    .gal-kicker { transition: none; }
     .gal-btn.convention-cta .ph-arrow-right { transition: transform 0.18s ease; }
     .gal-btn.convention-cta:hover .ph-arrow-right { transform: translateX(4px); }
     @keyframes conv-glow { 0%, 100% { box-shadow: 0 0 0 0 rgba(232, 180, 90, 0); transform: scale(1); } 50% { box-shadow: 0 0 22px 0 rgba(232, 180, 90, 0.4); transform: scale(1.03); } }
@@ -259,7 +272,7 @@
         </p>
         <div class="gal-cta">
           <a class="gal-btn primary conv-pulse" href="walkthrough.html"><i class="ph-fill ph-map-trifold"></i> Add your photos — the walkthrough</a>
-          <a class="gal-btn" href="#albums"><i class="ph-fill ph-images"></i> Browse the albums</a>
+          <a class="gal-btn albums-cta" href="#albums"><i class="ph-fill ph-images"></i> Browse the albums</a>
           <a class="gal-btn convention-cta" href="https://psychedelicsinrecovery.github.io/convention-astro/"><i class="ph-fill ph-confetti"></i> The Convention site <i class="ph-fill ph-arrow-right"></i></a>
         </div>
       </section>
