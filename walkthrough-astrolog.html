@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en" data-arrival-site="astrolog" data-arrival-splash="off">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Add a picture to the AstroLog · Psychedelics In Recovery™ – PIR®</title>
+  <meta name="description" content="How to add a screenshot or image to the PIR® AstroLog's assets shelf — three paths: send it to a trusted servant, use GitHub in your browser (github.dev), or walk the full process in your terminal." />
+  <meta name="theme-color" content="#06050e" />
+  <link rel="icon" href="https://psychedelicsinrecovery.github.io/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/fill/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/regular/style.css" />
+  <link rel="stylesheet" href="https://psychedelicsinrecovery.github.io/arrival/arrival.css" />
+  <link rel="stylesheet" href="https://psychedelicsinrecovery.github.io/arrival/org.css" />
+  <link rel="stylesheet" href="https://psychedelicsinrecovery.github.io/alex-desk-public/assets/alex.css" />
+  <style>
+    /* Site-prefixed tokens on purpose: the kit owns --ink, --muted and friends. */
+    :root {
+      --log-ink: #f3eee4;
+      --log-muted: rgba(243, 238, 228, 0.66);
+      --log-gold: #e8b45a;
+      --log-violet: #a78bfa;
+      --log-panel: rgba(255, 255, 255, 0.05);
+      --log-line: rgba(255, 255, 255, 0.12);
+      --log-serif: "Fraunces", Georgia, serif;
+      --log-sans: "Manrope", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; color: var(--log-ink); background: #06050e; font-family: var(--log-sans); -webkit-font-smoothing: antialiased; }
+    #starfield-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    .log-wrap { max-width: 900px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); position: relative; z-index: 5; }
+    header.top { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(12px); background: rgba(6, 5, 14, 0.55); border-bottom: 1px solid var(--log-line); }
+    header.top .wrap { display: flex; align-items: center; gap: 1rem; min-height: 64px; max-width: 1180px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
+    .brand { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--log-ink); font-family: var(--log-serif); font-weight: 700; font-size: 1.1rem; }
+    .brand img { border-radius: 9px; }
+    .brand small { font-family: var(--log-sans); font-weight: 600; font-size: 0.72rem; color: var(--log-violet); margin-left: 0.15rem; }
+    .gal-hero { text-align: center; padding: clamp(2.5rem, 7vw, 4.5rem) 0 1.5rem; }
+    .gal-kicker { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--log-gold); border: 1px solid rgba(232, 180, 90, 0.35); border-radius: 999px; padding: 0.4rem 0.9rem; background: rgba(232, 180, 90, 0.08); }
+    .gal-hero h1 { font-family: var(--log-serif); font-size: clamp(1.9rem, 5vw, 3rem); margin: 1.1rem 0 0.8rem; line-height: 1.15; }
+    .gal-lede { color: var(--log-muted); font-size: 1.02rem; line-height: 1.7; max-width: 62ch; margin: 0 auto; }
+    h2 { font-family: var(--log-serif); font-size: 1.5rem; margin: 2.6rem 0 0.4rem; }
+    .gal-paths { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; margin: 1.1rem 0 0.6rem; }
+    .gal-path { border: 1px solid var(--log-line); border-radius: 18px; background: var(--log-panel); padding: 1.4rem 1.3rem; }
+    .gal-path > i { font-size: 1.7rem; color: var(--log-violet); }
+    .gal-path h3 { font-family: var(--log-serif); font-size: 1.12rem; margin: 0.6rem 0 0.45rem; }
+    .gal-path p { margin: 0 0 1rem; font-size: 0.9rem; color: var(--log-muted); line-height: 1.65; }
+    .gal-btn { display: inline-flex; align-items: center; gap: 0.45rem; text-decoration: none; color: var(--log-ink); border: 1px solid var(--log-line); border-radius: 999px; padding: 0.5rem 1rem; font-size: 0.86rem; font-weight: 600; }
+    .gal-btn.primary { background: linear-gradient(120deg, var(--log-violet), var(--log-gold)); color: #14101f; border: 0; }
+    ol.gal-steps { list-style: none; counter-reset: st; padding: 0; margin: 1.2rem 0; display: flex; flex-direction: column; gap: 0.9rem; }
+    ol.gal-steps li { counter-increment: st; display: grid; grid-template-columns: 2.6rem 1fr; gap: 0.9rem; border: 1px solid var(--log-line); border-radius: 18px; background: var(--log-panel); padding: 1.1rem 1.2rem; }
+    ol.gal-steps li::before { content: counter(st); font-family: var(--log-serif); font-size: 1.5rem; font-weight: 700; color: var(--log-gold); line-height: 1; }
+    ol.gal-steps h3 { font-family: var(--log-serif); font-size: 1.06rem; margin: 0.15rem 0 0.35rem; color: var(--log-ink); }
+    ol.gal-steps p { margin: 0; font-size: 0.9rem; color: var(--log-muted); line-height: 1.6; }
+    ol.gal-steps code { font-family: "JetBrains Mono", monospace; font-size: 0.84em; background: rgba(255, 255, 255, 0.07); border: 1px solid var(--log-line); border-radius: 6px; padding: 0.08em 0.4em; color: var(--log-ink); }
+    pre { font-family: "JetBrains Mono", monospace; font-size: 0.85rem; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--log-line); border-radius: 12px; padding: 1rem 1.2rem; overflow-x: auto; line-height: 1.6; color: var(--log-ink); }
+    .gal-notes { border: 1px solid var(--log-line); border-radius: 18px; background: var(--log-panel); padding: 1.3rem 1.4rem; margin: 1.4rem 0; }
+    .gal-notes ul { margin: 0.4rem 0 0; padding-left: 1.2rem; color: var(--log-muted); font-size: 0.9rem; line-height: 1.7; }
+    a.inline { color: var(--log-gold); }
+    .pir-foot { display: flex; flex-wrap: wrap; gap: 1.6rem; justify-content: space-between; align-items: flex-start; padding: 2.4rem 0 3rem; border-top: 1px solid var(--log-line); margin-top: 3rem; }
+    .tended { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.7rem; color: var(--log-muted); font-size: 0.85rem; text-decoration: none; }
+    .tended b { color: var(--log-ink); }
+    .cat-mark { width: 14px; height: 14px; border-radius: 4px; background: linear-gradient(135deg, var(--log-violet), var(--log-gold)); display: inline-block; }
+    footer .wrap { max-width: 1180px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
+  </style>
+</head>
+<body>
+  <canvas id="starfield-canvas" aria-hidden="true"></canvas>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="https://psychedelicsinrecovery.github.io/changelog-astro-public/">
+        <img src="https://psychedelicsinrecovery.github.io/favicon.svg" alt="" width="34" height="34" />
+        <span class="arr-brand-text">AstroLog <small>PIR®</small></span>
+      </a>
+      <arrival-nav></arrival-nav>
+      <arrival-controls></arrival-controls>
+    </div>
+  </header>
+
+  <main>
+    <div class="log-wrap">
+      <section class="gal-hero">
+        <span class="gal-kicker"><i class="ph-fill ph-images"></i> The assets shelf, end to end</span>
+        <h1>Add a picture to the AstroLog</h1>
+        <p class="gal-lede">
+          Every screenshot in the ledger — a ticket, a control panel, a moment of the work —
+          lives on the fellowship's own ground, in one folder anyone can add to. Three paths,
+          all ending in the same place: your picture published at a permanent address, named
+          so it sorts beside the entry it belongs to. Pick whichever fits how you like to work.
+        </p>
+      </section>
+
+      <h2>Choose your path</h2>
+      <div class="gal-paths">
+        <div class="gal-path">
+          <i class="ph-fill ph-paper-plane-tilt"></i>
+          <h3>The send-it-in path</h3>
+          <p>Send the screenshot to a trusted servant — the Tech Committee's channels you already know, or PIR's contact page. They will name it, attach it to the right ledger entry, and place it on the shelf with care.</p>
+          <a class="gal-btn primary" href="https://service.psychedelicsinrecovery.org/tech-committee/" target="_blank" rel="noopener"><i class="ph-fill ph-hand-heart"></i> Reach the Tech Committee</a>
+        </div>
+        <div class="gal-path" id="web">
+          <i class="ph-fill ph-browser"></i>
+          <h3>The browser-only path</h3>
+          <p>No tools to install. GitHub's own website — or github.dev, GitHub's editor in the browser — does everything: upload the picture, name it, done. Works from any computer with a browser.</p>
+          <a class="gal-btn" href="#web-steps"><i class="ph-fill ph-arrow-down"></i> Walk the web path</a>
+        </div>
+        <div class="gal-path">
+          <i class="ph-fill ph-git-branch"></i>
+          <h3>The do-it-with-us path</h3>
+          <p>For members comfortable with folders and a terminal — clone, move, commit, push. The full walkthrough is below.</p>
+          <a class="gal-btn" href="#steps"><i class="ph-fill ph-arrow-down"></i> Walk the full process</a>
+        </div>
+      </div>
+
+      <h2 id="web-steps">The browser-only path (no terminal, no installs)</h2>
+      <p class="gal-lede">This walks you through GitHub's own website — the same place the ledger lives. If you can attach a photo to an email, you can do this.</p>
+      <ol class="gal-steps">
+        <li>
+          <div>
+            <h3>Name the file first, on your own computer</h3>
+            <p>The shelf has one naming convention: <code>YYYY-MM-DD-short-name.png</code> — and the date is the day the screenshot <em>captures</em>, not the day you upload it, so the file sorts beside the ledger entry it belongs to. Real examples from the shelf: <code>2025-10-08-david-lee-ticket-102161.png</code> and <code>2026-10-14-xdn-panel-main-domain-building.png</code>.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Blur anything personal</h3>
+            <p>Ticket numbers and support staff names are fine; account numbers, email addresses and members' personal details are not. A quick crop or blur before upload is the whole ritual — the ledger is read by the whole fellowship.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Open the assets folder on GitHub</h3>
+            <p>Go to <a class="inline" href="https://github.com/psychedelicsinrecovery/changelog-astro" target="_blank" rel="noopener">github.com/psychedelicsinrecovery/changelog-astro</a> and open the <code>assets</code> folder. A pleasant shortcut: press <code>.</code> (the period key) anywhere on the repo page — GitHub opens <strong>github.dev</strong>, a code editor right in the browser, where you can simply drag your picture onto the <code>assets</code> folder in the file list.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Upload with the exact name</h3>
+            <p>On the repo page: <strong>Add file</strong> → <strong>Upload files</strong>, drag your picture in, and rename it in the dialog if it isn't named yet. In github.dev: drag the file onto <code>assets/</code>, then check the name one last time.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Commit</h3>
+            <p>Give the change a friendly title — <em>"Add the XDN panel screenshot"</em> — and commit to <code>main</code>. That's the whole upload. The next sync run publishes it at a permanent address:</p>
+            <pre>https://psychedelicsinrecovery.github.io/changelog-astro-public/assets/your-file-name.png</pre>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Connect it to the ledger</h3>
+            <p>A picture shines when an entry tells its story. If you edit entries yourself, reference the public URL above from the entry's markdown; if you don't, a trusted servant will wire it in — mention which entry it belongs to when you send word.</p>
+          </div>
+        </li>
+      </ol>
+
+      <h2 id="steps">The full walkthrough (terminal)</h2>
+      <ol class="gal-steps">
+        <li>
+          <div>
+            <h3>Clone (or update) your copy</h3>
+            <pre>git clone https://github.com/psychedelicsinrecovery/changelog-astro
+cd changelog-astro        # or: git pull, if you already have it</pre>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Name and place the picture</h3>
+            <p>Same convention — <code>YYYY-MM-DD-short-name.png</code>, dated by capture — moved into <code>assets/</code>:</p>
+            <pre>mv ~/Downloads/Screenshot\ 2026-10-14\ at\ 15.21.36.png \
+   assets/2026-10-14-xdn-panel-main-domain-building.png</pre>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Commit and push</h3>
+            <pre>git add assets/
+git commit -m "Add the XDN panel screenshot (2026-10-14)"
+git push</pre>
+            <p>The sync workflow carries <code>assets/</code> to the public site untouched — the build never reads this folder, so a picture can never break the site.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3>Reference it from an entry</h3>
+            <pre>&lt;img src="https://psychedelicsinrecovery.github.io/changelog-astro-public/assets/2026-10-14-xdn-panel-main-domain-building.png"
+     alt="The WPX XDN panel: the main domain's rebuild spinning"
+     style="max-width:100%;border-radius:12px;margin:1rem 0" loading="lazy" /&gt;</pre>
+            <p>Always an <code>alt</code> that says what a person would see — the ledger is read by screen readers too.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="gal-notes">
+        <h3 style="font-family:var(--log-serif);margin:0 0 .2rem">Good to know</h3>
+        <ul>
+          <li><strong>One file, many mentions.</strong> Upload once; every entry references the same public URL. There is never a need to duplicate an image.</li>
+          <li><strong>Keep it light.</strong> A screenshot is usually well under 1 MB. If yours is huge, a smaller crop helps the ledger load on phones.</li>
+          <li><strong>Stay inside <code>assets/</code>.</strong> The repository's checks expect every file in a known place — pictures belong on the shelf, not loose at the repo's root.</li>
+          <li><strong>Nothing here can break the ledger.</strong> The build never reads this folder; it simply carries it. Upload, name it well, done.</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap pir-foot">
+      <div>
+        <a class="brand" href="https://psychedelicsinrecovery.github.io/changelog-astro-public/">
+          <img src="https://psychedelicsinrecovery.github.io/favicon.svg" alt="" width="34" height="34" />
+          <span class="arr-brand-text">AstroLog <small>PIR®</small></span>
+        </a>
+        <span style="display:block;margin-top:0.7rem;max-width:36ch">The walkthrough for adding pictures to the assets shelf of the AstroLog of Psychedelics In Recovery™ – PIR®, housed in the gallery repo among the fellowship's how-to guides.</span>
+        <a class="tended" href="https://psychedelicsinrecovery.github.io/catalyst-desk-public/"><span class="cat-mark"></span>Tended by <b>C.A.T.A.L.Y.S.T.</b>, PIR®'s helper fleet</a>
+      </div>
+      <arrival-footer></arrival-footer>
+    </div>
+  </footer>
+
+  <!-- The kit override: this site's name and welcome, read by the kit before it runs. -->
+  <script>
+    window.ARRIVAL_SITE = {
+      name: "the AstroLog",
+      what: "This is the walkthrough for adding pictures to the ledger's assets shelf. Three paths: send it to a trusted servant, use GitHub in your browser, or follow the steps in a terminal.",
+    };
+  </script>
+  <script src="https://psychedelicsinrecovery.github.io/arrival/org.js" defer></script>
+  <script src="https://psychedelicsinrecovery.github.io/arrival/arrival.js" defer></script>
+  <script src="https://psychedelicsinrecovery.github.io/starfield.js" defer></script>
+</body>
+</html>
