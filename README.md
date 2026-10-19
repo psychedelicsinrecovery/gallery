@@ -10,8 +10,9 @@
 The fellowship's own photo gallery for **Psychedelics In Recovery™ – PIR®** — every gathering's
 albums, kept on GitHub. Live at: **https://psychedelicsinrecovery.github.io/gallery/**
 
-A sibling of the [Convention site](https://github.com/psychedelicsinrecovery/convention-astro)
-and the [AstroLog](https://github.com/psychedelicsinrecovery/changelog-astro). One night sky,
+A sibling of the [Convention site](https://github.com/psychedelicsinrecovery/convention-astro),
+the [AstroLog](https://github.com/psychedelicsinrecovery/changelog-astro), and the
+[Convention Hub](https://www.psychedelicsinrecovery.org/convention-hub/). One night sky,
 many desks.
 
 > 💡 **How this gallery began:** a WhatsApp request to connect Anne R.'s Pixieset album for the
@@ -29,12 +30,19 @@ Pixieset is lovely for sharing right now — and this is the version the fellows
 - **Anonymity-aware.** Captions use first name + last initial, per the fellowship's tradition.
 - **Consent first.** Any photo comes down on request to the gallery's trusted servants.
 
+## The how-to guides (housed here)
+
+This repo is home to the fellowship's friendly how-to guides:
+
+- **[Add your photos to the gallery](https://psychedelicsinrecovery.github.io/gallery/walkthrough.html)** — the member-facing guide: Drive, browser-only, or full terminal path.
+- **[Add a picture to the AstroLog](https://psychedelicsinrecovery.github.io/gallery/walkthrough-astrolog.html)** — the assets-shelf guide, moved here so every how-to lives under one roof.
+
 ## The photo workflow (for trusted servants and volunteers)
 
 The full, friendly version lives at the [walkthrough page](https://psychedelicsinrecovery.github.io/gallery/walkthrough.html).
 The short version:
 
-1. Photos arrive in the shared [Drive folder](https://drive.google.com/drive/folders/1zUL1fHkDlWJLKrtHzfToceFoFl-PiTu?usp=sharing)
+1. Photos arrive in the shared [Drive folder](https://drive.google.com/drive/folders/1zUL1fHkDIWJLKrtHzfFToceFoFl-PiTu?usp=sharing)
    (or any way they arrive — WhatsApp, email, a USB stick at a convention).
 2. Drop them into `assets/albums/<album-id>/`. Name them with a number prefix so the order is
    right: `01-opening-ceremony.jpg`, `02-...`.
@@ -71,7 +79,8 @@ python3 -m http.server 8000
 
 ```
 index.html         the gallery portal — album spot cards, origin story, masonry, lightbox
-walkthrough.html   the member-facing walkthrough (linked from the README's opening blockquote)
+walkthrough.html   the member-facing photo walkthrough (linked from the opening blockquote)
+walkthrough-astrolog.html  the AstroLog assets-shelf walkthrough (housed here for the suite)
 photos.json        the manifest the page reads (generated or hand-edited)
 assets/            the photographs, in album folders
 tools/             build_manifest.py — scans assets/ and writes photos.json
