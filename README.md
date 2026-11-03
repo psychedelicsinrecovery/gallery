@@ -1,4 +1,25 @@
+<!-- readme-standard: 2026-11-02 -->
+<div align="center">
+
+<img src="assets/banner.svg" width="100%" alt="The PIR Gallery: stars come out and join across a night sky, one sky holding many gatherings.">
+
 # 🖼️ The PIR® Gallery
+
+*The fellowship's own photo gallery, kept on GitHub.*
+
+[![Live](https://img.shields.io/badge/Live-gallery-7c3aed?style=flat-square)](https://psychedelicsinrecovery.github.io/gallery/)
+[![Licence](https://img.shields.io/badge/Licence-see_LICENSE-3b1f6e?style=flat-square)](./LICENSE)
+![For](https://img.shields.io/badge/For-The_fellowship-64748b?style=flat-square)
+
+<img src="assets/icons/map-pin.svg" width="16" height="16" alt=""> **You are here:** PIR® › `gallery` · public · `main` is the working branch
+
+</div>
+
+## <img src="assets/icons/compass.svg" width="24" height="24" alt=""> TL;DR
+
+1. <img src="assets/icons/sprout.svg" width="16" height="16" alt=""> **What this is.** Every gathering's albums: the photos live in this repository and the gallery is a single HTML page.
+2. <img src="assets/icons/users-round.svg" width="16" height="16" alt=""> **Who it is for.** Members with photos to add, trusted servants who place them, and anyone looking back at a gathering. Any photo comes down on request.
+3. <img src="assets/icons/footprints.svg" width="16" height="16" alt=""> **Do this first.** [See the gallery](https://psychedelicsinrecovery.github.io/gallery/), or follow the [walkthrough](https://psychedelicsinrecovery.github.io/gallery/walkthrough.html) to add your photos.
 
 > ### Hi — are you a member here looking to upload photos?
 >
@@ -93,3 +114,9 @@ Psychedelics In Recovery™ – PIR®. The marks belong to the fellowship.
 ---
 
 *Built with care for the fellowship by the PIR® Tech Committee's helpers.*
+
+## <img src="assets/icons/git-pull-request.svg" width="24" height="24" alt=""> Suggest a change
+
+Noticed something, or want a photo taken down? Tell the gallery's trusted servants: type `/techcom` in [PIR®'s Discord](https://discord.gg/MyprTq8w95). On GitHub, open an [issue](https://github.com/psychedelicsinrecovery/gallery/issues) or a pull request against `main`; a person with the role merges.
+
+<sub>The front door follows the living [README standard](https://github.com/drasticstatic/my-template/blob/main/README-STANDARD.md). Copy it, improve it.</sub>
